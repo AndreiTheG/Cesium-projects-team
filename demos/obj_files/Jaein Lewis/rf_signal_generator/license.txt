@@ -1,0 +1,11 @@
+Model Information:
+* title:	RF Signal Generator
+* source:	https://sketchfab.com/3d-models/rf-signal-generator-87400f4b01674ace8abc57858a17a370
+* author:	Blender3D (https://sketchfab.com/Blender3D)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "RF Signal Generator" (https://sketchfab.com/3d-models/rf-signal-generator-87400f4b01674ace8abc57858a17a370) by Blender3D (https://sketchfab.com/Blender3D) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
