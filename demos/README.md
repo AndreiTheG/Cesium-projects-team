@@ -1,9 +1,11 @@
-Demos (demos/)
-Overview
+# **Demos (demos/)**
+
+# **Overview**
 The demos/ folder contains video explanations and 3D object files related to Cesium projects. This section helps users understand project implementations through recorded demonstrations and provides reusable 3D models for visualization.
 
 
-Folder Structure
+# **Folder Structure**
+
 📂 demos/
 ├── 📂 application_videos/ → Contains video explanations of team members' Cesium projects.
 │ ├── 📂 Ahmed Adel/ → Video(s) showcasing Ahmed Adel’s project.
@@ -35,24 +37,20 @@ Folder Structure
 │
 ├── README.md → Documentation for this directory.
 
-How to Use These Files?
-Application Videos:
-Navigate to application_videos/ to watch each team member’s project demonstration.
+# **How to Use These Files?**
 
-These videos provide insights into how Cesium features are implemented.
+# **Application Videos:**
+- Navigate to application_videos/ to watch each team member’s project demonstration.
+- These videos provide insights into how Cesium features are implemented.
 
-3D Object Files:
-Explore obj_files/ for Cesium-compatible 3D models in .obj, .glb, and .gltf formats.
+# **3D Object Files:**
+- Explore obj_files/ for Cesium-compatible 3D models in .obj, .glb, and .gltf formats.
+- Download and upload the files to Cesium Ion or serve them externally for use in Cesium applications.
+- Import the models dynamically into your Cesium project to visualize and manipulate them.
 
-Download and upload the files to Cesium Ion or serve them externally for use in Cesium applications.
-
-Import the models dynamically into your Cesium project to visualize and manipulate them.
-
-Contribution Guidelines
-Each team member should upload their presentation videos inside their respective folder under application_videos/.
-
-3D object files should be placed inside the respective subfolder under obj_files/.
-
-Use descriptive file names for clarity (e.g., sensor_model.glb, radar_visualization.mp4).
+# **Contribution Guidelines**
+- Each team member should upload their presentation videos inside their respective folder under application_videos/.
+- 3D object files should be placed inside the respective subfolder under obj_files/.
+- Use descriptive file names for clarity (e.g., sensor_model.glb, radar_visualization.mp4).
 
 This structure ensures clarity, easy access to both project demonstrations and 3D assets, and seamless integration with Cesium.
