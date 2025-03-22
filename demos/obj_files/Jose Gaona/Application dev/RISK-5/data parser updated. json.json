@@ -1,0 +1,109 @@
+import json
+import os
+import logging
+from datetime import datetime
+
+# Initialize logger
+logger = logging.getLogger(__name__)
+
+def parse_simulation_log(log_path, data_path):
+    logger.info("Parsing simulation log to extract data.")
+    
+    # Check if log file exists
+    if not os.path.isfile(log_path):
+        logger.error(f"Log file not found at {log_path}")
+        raise FileNotFoundError(f"Log file not found at {log_path}")
+    
+    # Initialize a dictionary to store parsed data
+    data = {}
+
+    try:
+        with open(log_path, 'r') as log_file:
+            output = log_file.read()
+            logger.debug(f"Simulation Log Content: {output[:500]}...")  # Displaying first 500 characters for brevity
+
+            # Example parsing logic; adjust based on actual log content
+            if "Hello, RISC-V!" in output:
+                data['message'] = "Hello, RISC-V!"
+            
+            # Parse specific performance metrics
+            for line in output.splitlines():
+                # Parsing the number of instructions executed
+                if "Instructions Executed:" in line:
+                    try:
+                        data['instructions_executed'] = int(line.split(":")[1].strip())
+                        logger.debug(f"Extracted instructions_executed: {data['instructions_executed']}")
+                    except ValueError:
+                        logger.warning(f"Failed to parse instructions_executed from line: {line}")
+
+                # Parsing stalls
+                elif "Stalls:" in line:
+                    try:
+                        data['stalls'] = int(line.split(":")[1].strip())
+                        logger.debug(f"Extracted stalls: {data['stalls']}")
+                    except ValueError:
+                        logger.warning(f"Failed to parse stalls from line: {line}")
+
+                # Parsing branch mispredictions
+                elif "Branch Mispredictions:" in line:
+                    try:
+                        data['branch_mispredictions'] = int(line.split(":")[1].strip())
+                        logger.debug(f"Extracted branch_mispredictions: {data['branch_mispredictions']}")
+                    except ValueError:
+                        logger.warning(f"Failed to parse branch_mispredictions from line: {line}")
+
+                # Parse cycle count (execution cycles)
+                elif "Cycles:" in line:
+                    try:
+                        data['cycles'] = int(line.split(":")[1].strip())
+                        logger.debug(f"Extracted cycles: {data['cycles']}")
+                    except ValueError:
+                        logger.warning(f"Failed to parse cycles from line: {line}")
+
+                # Parse execution time (time in seconds)
+                elif "Execution Time (seconds):" in line:
+                    try:
+                        data['execution_time_seconds'] = float(line.split(":")[1].strip())
+                        logger.debug(f"Extracted execution time: {data['execution_time_seconds']} seconds")
+                    except ValueError:
+                        logger.warning(f"Failed to parse execution_time_seconds from line: {line}")
+
+                # Parse memory accesses
+                elif "Memory Accesses:" in line:
+                    try:
+                        data['memory_accesses'] = int(line.split(":")[1].strip())
+                        logger.debug(f"Extracted memory accesses: {data['memory_accesses']}")
+                    except ValueError:
+                        logger.warning(f"Failed to parse memory accesses from line: {line}")
+
+                # Parse instruction breakdown (if applicable)
+                elif "Instruction Breakdown:" in line:
+                    instruction_data = {}
+                    try:
+                        # Assuming the format might be something like: "ADD: 1000, SUB: 500, LOAD: 1500"
+                        instruction_data_raw = line.split(":")[1].strip().split(", ")
+                        for instr in instruction_data_raw:
+                            instr_type, count = instr.split(":")
+                            instruction_data[instr_type.strip()] = int(count.strip())
+                        data['instruction_breakdown'] = instruction_data
+                        logger.debug(f"Extracted instruction breakdown: {instruction_data}")
+                    except ValueError:
+                        logger.warning(f"Failed to parse instruction breakdown from line: {line}")
+            
+            # Add timestamp for when data was parsed
+            data['timestamp'] = datetime.utcnow().isoformat() + 'Z'
+    
+    except Exception as e:
+        logger.error(f"Error parsing log file: {e}")
+        raise
+    
+    try:
+        # Write parsed data to output JSON file
+        with open(data_path, 'w') as data_file:
+            json.dump(data, data_file, indent=4)
+        logger.info(f"Simulation data parsed and saved to {data_path}")
+    except Exception as e:
+        logger.error(f"Failed to write simulation data to {data_path}: {e}")
+        raise
+    
+    return data

@@ -1,0 +1,135 @@
+﻿Backend Flask API
+from flask import Flask, jsonify
+import random
+
+
+app = Flask(__name__)
+
+
+Define the infrared thermometer's properties
+thermometer = {
+    'name': 'Infrared Thermometer',
+    'sensors': [
+        {
+            'name': 'Sensor 1',
+            'temperature': 0,
+            'unit': 'Celsius'
+        },
+        {
+            'name': 'Sensor 2',
+            'temperature': 0,
+            'unit': 'Celsius'
+        }
+    ]
+}
+
+
+Define a function to generate random temperature data
+def generate_temperature_data():
+    thermometer['sensors'][0]['temperature'] = random.uniform(20, 40)
+    thermometer['sensors'][1]['temperature'] = random.uniform(20, 40)
+
+
+Define a route to return the thermometer's properties
+@app.route('/thermometer', methods=['GET'])
+def get_thermometer():
+    generate_temperature_data()
+    return jsonify(thermometer)
+
+
+Define a route to return the thermometer's temperature data
+@app.route('/thermometer/temperature', methods=['GET'])
+def get_temperature_data():
+    generate_temperature_data()
+    return jsonify(thermometer['sensors'])
+
+
+if __name__ == '__main__':
+    app.run(debug=True)
+```
+
+
+```
+<!-- Frontend CesiumJS -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Infrared Thermometer Indicator</title>
+    <script src="https://unpkg.com/cesium@1.94/Build/Cesium/Cesium.js"></script>
+    <style>
+        #cesiumContainer {
+            width: 100%;
+            height: 600px;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <div id="cesiumContainer"></div>
+    <script>
+        // Initialize the Cesium viewer
+        const viewer = new Cesium.Viewer('cesiumContainer');
+
+
+        // Load the thermometer's properties from the backend API
+        fetch('/thermometer')
+            .then(response => response.json())
+            .then(thermometer => {
+                // Create a Cesium entity for the thermometer
+                const thermometerEntity = viewer.entities.add({
+                    name: thermometer.name,
+                    position: Cesium.Cartesian3.fromDegrees(0, 0, 0),
+                    orientation: Cesium.HeadingPitchRoll.fromDegrees(0, 0, 0),
+                    geometry: new Cesium.SphereGeometry({
+                        radius: 10
+                    })
+                });
+
+
+                // Create Cesium entities for the sensors
+                thermometer.sensors.forEach(sensor => {
+                    const sensorEntity = viewer.entities.add({
+                        name: sensor.name,
+                        position: Cesium.Cartesian3.fromDegrees(0, 0, 0),
+                        orientation: Cesium.HeadingPitchRoll.fromDegrees(0, 0, 0),
+                        geometry: new Cesium.SphereGeometry({
+                            radius: 5
+                        })
+                    });
+
+
+                    // Create a Cesium label for the sensor's temperature
+                    const temperatureLabel = viewer.entities.add({
+                        name: `${sensor.name} Temperature`,
+                        position: sensorEntity.position,
+                        orientation: sensorEntity.orientation,
+                        label: {
+                            text: `${sensor.temperature} ${sensor.unit}`,
+                            font: '14px monospace',
+                            style: Cesium.LabelStyle.FILL,
+                            outlineWidth: 2
+                        }
+                    });
+                });
+            });
+
+
+        // Update the temperature data every second
+        setInterval(() => {
+            fetch('/thermometer/temperature')
+                .then(response => response.json())
+                .then(temperatureData => {
+                    temperatureData.forEach(sensor => {
+                        const sensorEntity = viewer.entities.getByName(sensor.name);
+                        const temperatureLabel = viewer.entities.getByName(`${sensor.name} Temperature`);
+                        temperatureLabel.label.text = `${sensor.temperature} ${sensor.unit}`;
+                    });
+                });
+        }, 1000);
+    </script>
+</body>
+</html>
+```
