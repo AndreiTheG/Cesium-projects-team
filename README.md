@@ -60,8 +60,8 @@ Defines the open-source license governing the project.
 4. **Clone the repository and contribute!**  
 
 ```bash
-git clone https://github.com/AndreiTheG/cesium-project-team.git
-cd cesium-project
+git clone https://github.com/AndreiTheG/cesium-projects-team.git
+cd cesium-projects-team
 ```
 
 Merging & Open-Sourcing Plan
