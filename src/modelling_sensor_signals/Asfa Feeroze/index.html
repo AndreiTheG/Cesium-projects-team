@@ -1,0 +1,1229 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>OPENQQUANTIFY Cesium Application</title>
+    <!-- Include CesiumJS JavaScript and CSS files -->
+    <script src="https://cesium.com/downloads/cesiumjs/releases/1.121/Build/Cesium/Cesium.js"></script>
+    <link
+      href="https://cesium.com/downloads/cesiumjs/releases/1.121/Build/Cesium/Widgets/widgets.css"
+      rel="stylesheet"
+    />
+    <!-- Include Spectrum Color Picker CSS and JS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/spectrum-colorpicker2/dist/spectrum.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/spectrum-colorpicker2/dist/spectrum.min.js"></script>
+    <!-- Include jQuery for Spectrum Color Picker -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+      /* Global futuristic theme */
+      html,
+      body,
+      #cesiumContainer {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #000000;
+      }
+      body {
+        font-family: "Orbitron", sans-serif;
+        color: #00ffff;
+        background: linear-gradient(135deg, #001f3f 0%, #000000 100%);
+      }
+      .draggable {
+        width: 100px;
+        padding: 10px;
+        margin: 10px;
+        cursor: pointer;
+        border: 1px solid black;
+        background-color: lightgray;
+        text-align: center;
+      }
+      #toolbar {
+        position: absolute;
+        top: 0px;
+        left: 300px;
+        z-index: 100;
+        background-color: rgba(0, 0, 0, 0.8);
+        padding: 10px;
+      }
+      /* Futuristic Panels */
+      .panel {
+        position: absolute;
+        z-index: 10;
+        background: rgba(0, 0, 0, 0.9);
+        padding: 20px;
+        border-radius: 15px;
+        border: 2px solid rgba(0, 255, 255, 0.8);
+        box-shadow: 0px 0px 20px 10px rgba(0, 255, 255, 0.3);
+        color: #00ffff;
+        font-size: 14px;
+        transition: transform 0.3s ease-in-out;
+      }
+      .panel:hover {
+        transform: scale(1.05);
+        box-shadow: 0px 0px 30px 10px rgba(0, 255, 255, 0.6);
+      }
+      .panel h2 {
+        margin-top: 0;
+        font-size: 24px;
+        text-align: center;
+        color: #00ffff;
+        text-shadow: 0px 0px 10px #00ffff;
+        letter-spacing: 2px;
+      }
+      .panel h1 {
+        font-size: 36px;
+        text-align: center;
+        color: #ffffff;
+        text-shadow: 0px 0px 20px #00ffff;
+        letter-spacing: 4px;
+      }
+
+      /* Sensor List */
+      .sensor-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        max-height: 750px;
+        overflow-y: auto;
+        scrollbar-width: thin;
+        scrollbar-color: #00ffff #001f3f;
+      }
+      .sensor-list::-webkit-scrollbar {
+        width: 8px;
+      }
+      .sensor-list::-webkit-scrollbar-thumb {
+        background-color: #00ffff;
+        border-radius: 10px;
+      }
+      .sensor-list::-webkit-scrollbar-track {
+        background-color: #001f3f;
+      }
+      .sensor-list li {
+        margin-bottom: 15px;
+        text-align: center;
+      }
+      .sensor-item {
+        width: 80%;
+        height: 60px;
+        margin: 0 auto;
+        cursor: pointer;
+        border: 2px solid rgba(0, 255, 255, 0.8);
+        border-radius: 15px;
+        background: linear-gradient(
+          135deg,
+          rgba(0, 255, 255, 0.1),
+          rgba(0, 0, 0, 0.9)
+        );
+        transition: background-color 0.3s, box-shadow 0.3s, transform 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px;
+        box-shadow: 0px 0px 15px 5px rgba(0, 255, 255, 0.4);
+      }
+      .sensor-item:hover {
+        background-color: #00ffff;
+        color: #000;
+        box-shadow: 0px 0px 15px 5px #00ffff;
+        transform: translateY(-5px);
+      }
+      .sensor-item img {
+        width: 40px;
+        height: 40px;
+      }
+      .sensor-name {
+        font-size: 15px;
+        color: #ffffff;
+        text-shadow: 0px 0px 5px #00ffff;
+        width: 70%;
+        text-align: left;
+      }
+
+      /* Controls Panel */
+      .controls-panel button {
+        width: 100%;
+        padding: 15px;
+        font-size: 18px;
+        cursor: pointer;
+        border: 2px solid rgba(0, 255, 255, 0.8);
+        border-radius: 10px;
+        background: linear-gradient(
+          135deg,
+          rgba(0, 255, 255, 0.1),
+          rgba(0, 0, 0, 0.9)
+        );
+        color: #00ffff;
+        margin-bottom: 15px;
+        box-shadow: 0px 0px 15px 5px rgba(0, 255, 255, 0.4);
+        transition: background-color 0.3s, box-shadow 0.3s, transform 0.2s;
+      }
+      .controls-panel button:hover {
+        background-color: #00ffff;
+        color: #000;
+        box-shadow: 0px 0px 20px 10px #00ffff;
+        transform: translateY(-5px);
+      }
+
+      /* Positions */
+      .logo-container {
+        top: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 500px;
+        text-align: center;
+      }
+      .sensor-panel {
+        top: 0px;
+        left: 20px;
+        width: 220px;
+      }
+      .controls-panel {
+        bottom: 30px;
+        right: 20px;
+        width: 320px;
+      }
+      .info-panel {
+        top: 38px;
+        right: 20px;
+        width: 320px;
+      }
+      .parameter-panel {
+        bottom: 850px;
+        right: 20px;
+        width: 320px;
+      }
+
+      /* Search Panel */
+      .search-panel {
+        top: 300px;
+        left: 20px;
+        width: 320px;
+      }
+      .search-panel input[type="text"] {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 2px solid rgba(0, 255, 255, 0.8);
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.1);
+        color: #00ffff;
+        font-size: 16px;
+        box-shadow: 0px 0px 10px 2px rgba(0, 255, 255, 0.3);
+        transition: background-color 0.3s, box-shadow 0.3s;
+      }
+      .search-panel input[type="text"]:focus {
+        background: rgba(255, 255, 255, 0.2);
+        outline: none;
+        box-shadow: 0px 0px 15px 3px rgba(0, 255, 255, 0.5);
+      }
+      .search-panel button {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        cursor: pointer;
+        border: 2px solid rgba(0, 255, 255, 0.8);
+        border-radius: 10px;
+        background: linear-gradient(
+          135deg,
+          rgba(0, 255, 255, 0.1),
+          rgba(0, 0, 0, 0.9)
+        );
+        color: #00ffff;
+        box-shadow: 0px 0px 10px 2px rgba(0, 255, 255, 0.3);
+        transition: background-color 0.3s, box-shadow 0.3s, transform 0.2s;
+      }
+      .search-panel button:hover {
+        background-color: #00ffff;
+        color: #000;
+        box-shadow: 0px 0px 15px 5px #00ffff;
+        transform: translateY(-3px);
+      }
+
+      /* Slider Styles */
+      .slider-container {
+        margin: 20px 0;
+      }
+      .slider-container label {
+        display: block;
+        margin-bottom: 10px;
+        color: #00ffff;
+        text-shadow: 0px 0px 5px #00ffff;
+        font-size: 16px;
+      }
+      .slider-container input[type="range"] {
+        width: 100%;
+      }
+      /* Color Picker */
+      .color-picker {
+        margin: 20px 0;
+      }
+      /* Tooltip Styles */
+      .tooltip {
+        position: absolute;
+        z-index: 20;
+        background-color: rgba(0, 0, 0, 0.8);
+        color: #00ffff;
+        padding: 10px;
+        border-radius: 8px;
+        pointer-events: none;
+        font-size: 16px;
+        text-shadow: 0px 0px 10px #00ffff;
+        box-shadow: 0px 0px 10px 5px rgba(0, 255, 255, 0.6);
+        display: none; /* Initially hidden */
+      }
+      /* Under Development Overlay Styles */
+      .overlay {
+        position: fixed; /* Position the overlay relative to the viewport */
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(
+          0,
+          0,
+          0,
+          0.85
+        ); /* Semi-transparent black background */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 2000; /* Ensure the overlay sits above all other elements */
+      }
+      .overlay-content {
+        text-align: center;
+        color: #00ffff;
+        font-family: "Orbitron", sans-serif;
+        padding: 40px;
+        background: rgba(0, 0, 0, 0.7);
+        border: 3px solid #00ffff;
+        border-radius: 15px;
+        box-shadow: 0px 0px 30px 10px rgba(0, 255, 255, 0.6);
+      }
+      .overlay-content h1 {
+        font-size: 48px;
+        margin-bottom: 20px;
+        text-shadow: 0px 0px 10px #00ffff;
+      }
+      .overlay-content p {
+        font-size: 24px;
+        margin-bottom: 30px;
+        text-shadow: 0px 0px 5px #00ffff;
+      }
+      .overlay-content button {
+        padding: 15px 30px;
+        font-size: 18px;
+        cursor: pointer;
+        border: 2px solid #00ffff;
+        border-radius: 10px;
+        background-color: #001f3f;
+        color: #00ffff;
+        transition: background-color 0.3s, color 0.3s, transform 0.2s;
+      }
+      .overlay-content button:hover {
+        background-color: #00ffff;
+        color: #001f3f;
+        transform: scale(1.05);
+      }
+      /* Import Orbitron Font */
+      @import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap");
+    </style>
+  </head>
+  <body>
+    <!-- Under Development Overlay -->
+    <div id="developmentOverlay" class="overlay">
+      <div class="overlay-content">
+        <h1>Under Development</h1>
+        <p>
+          We're working hard to bring you an amazing experience. Have fun and
+          check our development progress every week! Contact us at
+          Connect@OpenQQuantify.com for Business Inquiries.
+        </p>
+        <button id="closeOverlay">Close</button>
+      </div>
+    </div>
+
+    <!-- Logo and Title -->
+    <div class="panel logo-container">
+      <h1>OPENQQUANTIFY</h1>
+    </div>
+
+    <!-- Sensor Selection Panel -->
+    <div class="panel sensor-panel">
+      <h2>Sensors</h2>
+      <ul class="sensor-list" id="sensorList">
+        <!-- Only one sensor item will be populated here (Ultrasonic) -->
+      </ul>
+    </div>
+
+    <!-- Controls Panel -->
+    <div class="panel controls-panel">
+      <h2>Simulation Controls</h2>
+      <button id="playButton">Play Simulation</button>
+      <button id="pauseButton">Pause Simulation</button>
+      <button id="resetButton">Reset Simulation</button>
+      <button id="clearButton">Clear Sensors</button>
+
+      <!-- Rotation Control Slider -->
+      <div class="slider-container">
+        <label for="headingSlider">Heading (°):</label>
+        <input
+          type="range"
+          id="headingSlider"
+          min="0"
+          max="360"
+          step="1"
+          value="0"
+        />
+        <p>Heading: <span id="headingValue">0</span>°</p>
+      </div>
+      <div class="slider-container">
+        <label for="pitchSlider">Pitch (°):</label>
+        <input
+          type="range"
+          id="pitchSlider"
+          min="-90"
+          max="90"
+          step="1"
+          value="0"
+        />
+        <p>Pitch: <span id="pitchValue">0</span>°</p>
+      </div>
+      <div class="slider-container">
+        <label for="rollSlider">Roll (°):</label>
+        <input
+          type="range"
+          id="rollSlider"
+          min="-180"
+          max="180"
+          step="1"
+          value="0"
+        />
+        <p>Roll: <span id="rollValue">0</span>°</p>
+      </div>
+    </div>
+
+    <!-- Search Panel -->
+    <div class="panel search-panel">
+      <h2>Search Location</h2>
+      <input
+        type="text"
+        id="latitudeInput"
+        placeholder="Enter Latitude (e.g., 40.7128)"
+      />
+      <input
+        type="text"
+        id="longitudeInput"
+        placeholder="Enter Longitude (e.g., -74.0060)"
+      />
+      <button id="searchButton">Go To Location</button>
+      <p
+        id="searchError"
+        style="color: #ff0000; display: none; margin-top: 10px"
+      >
+        Invalid coordinates. Please enter valid numbers.
+      </p>
+
+      <button id="placeModelButton">Place Model Here</button>
+      <label for="modelSelect">Select Model:</label>
+      <select id="modelSelect">
+        <option value="rocket">Rocket</option>
+        <option value="Satellite">Satellite</option>
+        <option value="Drone">Drone</option>
+        <!-- Add more options as needed -->
+      </select>
+    </div>
+
+    <!-- Sensor Information Panel -->
+    <div class="panel info-panel">
+      <h2>Sensor Information</h2>
+      <div id="sensorInfo">
+        <!-- Sensor information will be displayed here -->
+      </div>
+    </div>
+
+    <!-- Parameter Tuning Panel -->
+    <div class="panel parameter-panel">
+      <h2>Adjust Parameters</h2>
+      <div id="parameterControls">
+        <!-- Parameter controls for the single sensor -->
+      </div>
+    </div>
+
+    <!-- Tooltip for Dragging -->
+    <div id="tooltip" class="tooltip">Drag to Move Sensor</div>
+
+    <!-- Toolbar with Draggable Items (e.g., Rocket) -->
+    <div id="toolbar">
+      <div id="rocket" class="draggable" draggable="true">Rocket</div>
+      <!-- Add more draggable items as needed -->
+      <div id="Satellite" class="draggable" draggable="true">Satellite</div>
+      <div id="Drone" class="draggable" draggable="true">Drone</div>
+    </div>
+
+    <!-- Cesium Container -->
+    <div id="cesiumContainer"></div>
+
+    <!-- Script to handle the closing of the overlay -->
+    <script>
+      document
+        .getElementById("closeOverlay")
+        .addEventListener("click", function () {
+          document.getElementById("developmentOverlay").style.display = "none";
+        });
+    </script>
+
+    <!-- Main Script -->
+    <script type="module">
+      // Replace with your own Cesium Ion access token
+      Cesium.Ion.defaultAccessToken =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI2YzFmMzM0Zi0yMzM2LTQ5YWItYWQ4MC00MTVlNDJlNTNkZTkiLCJpZCI6Mjc5MzQ4LCJpYXQiOjE3NDA1NzY5MTh9._Hc6TDI9fUdFBhXqVP-X1O82NB6zu5Y7GIAZzCj_jbI";
+      //#############################################################################################
+      // THIS IS WHERE WE LOAD THE ENVIRONMENT FROM CESIUM
+      // Initialize the Cesium Viewer
+      const viewer = new Cesium.Viewer("cesiumContainer", {
+        terrain: Cesium.Terrain.fromWorldTerrain(),
+        animation: true,
+        timeline: true,
+        shouldAnimate: true,
+        infoBox: false, // Disable default info box
+        selectionIndicator: false, // Disable default selection indicator
+        shadows: true, // Enable shadows for a realistic effect
+      });
+
+      // Enable high dynamic range (HDR)
+      viewer.scene.highDynamicRange = true;
+      // Enable globe lighting
+      viewer.scene.globe.enableLighting = true;
+      // Add shadows
+      viewer.shadows = true;
+      viewer.scene.shadowMap.maximumDistance = 10000;
+      viewer.scene.shadowMap.size = 2048;
+      // Add atmospheric effects
+      viewer.scene.fog.enabled = true;
+      viewer.scene.skyAtmosphere.hueShift = 0.0;
+      viewer.scene.skyAtmosphere.saturationShift = 0.0;
+      viewer.scene.skyAtmosphere.brightnessShift = 0.0;
+
+      // Load 3D buildings
+      Cesium.createOsmBuildingsAsync()
+        .then(function (buildingTileset) {
+          viewer.scene.primitives.add(buildingTileset);
+          // Optionally hide a loading overlay if you have one
+          // document.getElementById('loadingOverlay').style.display = 'none';
+        })
+        .catch(function (error) {
+          console.error("Error loading buildings:", error);
+        });
+
+      // Set initial camera position (New York City)
+      const startLongitude = -74.006;
+      const startLatitude = 40.7128;
+      const eyeHeight = 500; // Elevated view to see the city
+
+      viewer.camera.setView({
+        destination: Cesium.Cartesian3.fromDegrees(
+          startLongitude,
+          startLatitude,
+          eyeHeight
+        ),
+        orientation: {
+          heading: Cesium.Math.toRadians(0.0),
+          pitch: Cesium.Math.toRadians(-45.0),
+          roll: 0.0,
+        },
+      });
+
+      // Enable depth testing against terrain
+      viewer.scene.globe.depthTestAgainstTerrain = true;
+
+      // Time settings
+      const start = Cesium.JulianDate.fromDate(new Date());
+      const stop = Cesium.JulianDate.addSeconds(
+        start,
+        3600,
+        new Cesium.JulianDate()
+      );
+
+      viewer.clock.startTime = start.clone();
+      viewer.clock.stopTime = stop.clone();
+      viewer.clock.currentTime = start.clone();
+      viewer.clock.clockRange = Cesium.ClockRange.LOOP_STOP;
+      viewer.clock.multiplier = 60;
+      viewer.clock.shouldAnimate = false;
+
+      viewer.timeline.zoomTo(start, stop);
+
+      //#######################################################################################################
+      // TTHIS IS WHERE WE LOAD IN THE OBJECTS AND MESHES
+      // Define asset IDs for models (Rocket and single Ultrasonic sensor)
+      const assetIds = {
+        rocket: 2746002,
+        Ultrasonic: 2750580,
+        Satellite: 3167261,
+        Drone: 3169462,
+      };
+
+      // Track selected model from the toolbar
+      let selectedModel = null;
+      let dragging = false;
+
+      // Handle dragging an item (e.g., rocket) from the toolbar
+      document.querySelectorAll(".draggable").forEach((item) => {
+        item.addEventListener("dragstart", (event) => {
+          selectedModel = event.target.id;
+          dragging = true;
+        });
+      });
+
+      // Placing model at the specified location
+      document
+        .getElementById("placeModelButton")
+        .addEventListener("click", function () {
+          // Replace 'rocket' with whichever model you desire
+          placeModelAtSearchLocation("Drone");
+        });
+
+      // Allow dropping onto Cesium container
+      const cesiumContainerassets = document.getElementById("cesiumContainer");
+
+      cesiumContainerassets.addEventListener("dragover", (event) => {
+        event.preventDefault();
+      });
+
+      // DRAG AND DROP EVENTS FOR OBJECTS
+      cesiumContainerassets.addEventListener("drop", (event) => {
+        event.preventDefault();
+        if (dragging && selectedModel) {
+          const canvasBounds = cesiumContainerassets.getBoundingClientRect();
+          const x = event.clientX - canvasBounds.left;
+          const y = event.clientY - canvasBounds.top;
+          const windowPosition = new Cesium.Cartesian2(x, y);
+          const earthPosition = viewer.scene.pickPosition(windowPosition);
+
+          if (Cesium.defined(earthPosition)) {
+            createModel(selectedModel, earthPosition);
+          }
+          dragging = false;
+          selectedModel = null;
+        }
+      });
+
+      // Utility to load and add a model entity
+      async function addModel(
+        assetId,
+        position,
+        orientation = Cesium.Quaternion.IDENTITY
+      ) {
+        try {
+          const resource = await Cesium.IonResource.fromAssetId(assetId);
+          const entity = viewer.entities.add({
+            position: position,
+            model: {
+              uri: resource,
+              scale: 5.0, // Adjust this if the model is too big or small
+              minimumPixelSize: 64, // Ensures visibility at any zoom level
+              maximumScale: 1000, // Prevents excessive model resizing
+            },
+            orientation: orientation,
+          });
+
+          selectedEntity = entity; // Automatically set the newly added model as selected
+          return entity;
+        } catch (error) {
+          console.error("Error loading model:", error);
+          return null;
+        }
+      }
+
+      // Create a model entity based on toolbar item
+      function createModel(modelType, position) {
+        const assetId = assetIds[modelType];
+        if (!assetId) {
+          console.error(`Asset ID for model type "${modelType}" not found.`);
+          return;
+        }
+
+        let orientation = Cesium.Quaternion.IDENTITY;
+        let scale = 1.0; // Default scale
+        // Example orientation for rocket
+        if (modelType === "rocket") {
+          const xAxis = Cesium.Cartesian3.UNIT_X;
+          const yAxis = Cesium.Cartesian3.UNIT_Y;
+          const xAngle = Cesium.Math.toRadians(229);
+          const yAngle = Cesium.Math.toRadians(79);
+          const xRotation = Cesium.Quaternion.fromAxisAngle(xAxis, xAngle);
+          const yRotation = Cesium.Quaternion.fromAxisAngle(yAxis, yAngle);
+          orientation = Cesium.Quaternion.multiply(
+            xRotation,
+            yRotation,
+            new Cesium.Quaternion()
+          );
+        }
+
+        // Orientation for your custom model
+        if (modelType === "Satellite") {
+          const zAxis = Cesium.Cartesian3.UNIT_Z;
+          const zAngle = Cesium.Math.toRadians(90); // Adjust this as needed
+          orientation = Cesium.Quaternion.fromAxisAngle(zAxis, zAngle);
+          scale = 10.0;
+        }
+
+        // Setting for drone
+
+        if (modelType === "Drone") {
+          // Customize the drone's settings if needed
+          // For example, you can set a different scale or orientation:
+          scale = 3.0;
+          orientation = Cesium.Quaternion.IDENTITY;
+        }
+
+        return addModel(assetId, position, orientation);
+      }
+
+      // Make models movable after they are placed
+      let selectedEntity = null;
+      let draggingEntity = null;
+
+      viewer.screenSpaceEventHandler.setInputAction((event) => {
+        const pickedObject = viewer.scene.pick(event.position);
+        if (Cesium.defined(pickedObject) && Cesium.defined(pickedObject.id)) {
+          selectedEntity = pickedObject.id; // For rotation
+          draggingEntity = pickedObject.id; // For dragging
+        }
+      }, Cesium.ScreenSpaceEventType.LEFT_DOWN);
+
+      // On mouse move, only update the position if we're actively dragging.
+      viewer.screenSpaceEventHandler.setInputAction((event) => {
+        if (draggingEntity) {
+          const newPosition = getMousePosition(event);
+          if (newPosition) {
+            draggingEntity.position = newPosition;
+          }
+        }
+      }, Cesium.ScreenSpaceEventType.MOUSE_MOVE);
+
+      // On mouse up, clear the dragging variable, but keep the selection.
+      viewer.screenSpaceEventHandler.setInputAction(() => {
+        draggingEntity = null;
+      }, Cesium.ScreenSpaceEventType.LEFT_UP);
+
+      // ==============
+      // Single Sensor
+      // ==============
+      let selectedSensorType = null;
+      let sensorEntities = [];
+      let currentSensorParam = null;
+      let draggingSensorItem = null;
+
+      // Only one sensor's parameters: Ultrasonic
+      const sensorParameters = {
+        Ultrasonic: {
+          minRange: 0.02,
+          maxRange: 10,
+          defaultRange: 5,
+          minFov: 1,
+          maxFov: 30,
+          defaultFov: 15,
+          color: "#0000FF",
+          unit: "m",
+          description:
+            "Ultrasonic sensors measure distance using ultrasonic waves, typically used for obstacle detection and ranging in robotics and vehicles.",
+          type: "cone",
+          icon: "https://img.icons8.com/fluency/48/000000/sensor.png",
+        },
+      };
+      //###########################################################################################
+      // YOU CAN ADD YOUR OWN SENSORS HERE ABOVE ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      //############################################################################################
+
+      // Populate sensor selection list with only the Ultrasonic sensor
+      const sensorListElement = document.getElementById("sensorList");
+      for (const sensorType in sensorParameters) {
+        const li = document.createElement("li");
+        li.className = "sensor-item";
+        li.draggable = true;
+        li.setAttribute("data-sensor-type", sensorType);
+
+        const img = document.createElement("img");
+        img.src = sensorParameters[sensorType].icon;
+        img.alt = sensorType;
+
+        const name = document.createElement("div");
+        name.className = "sensor-name";
+        name.textContent = sensorType;
+
+        li.appendChild(img);
+        li.appendChild(name);
+        sensorListElement.appendChild(li);
+      }
+
+      // Handle sensor drag events
+      const sensorItems = document.getElementsByClassName("sensor-item");
+      Array.from(sensorItems).forEach((item) => {
+        item.addEventListener("dragstart", (e) => {
+          selectedSensorType = item.getAttribute("data-sensor-type");
+          currentSensorParam = Object.assign(
+            {},
+            sensorParameters[selectedSensorType]
+          );
+          displaySensorInfo(selectedSensorType, currentSensorParam);
+          setupParameterControls(currentSensorParam);
+          draggingSensorItem = item;
+          e.dataTransfer.setData("text/plain", "");
+        });
+      });
+
+      // Handle drop on the Cesium canvas for sensor
+      const cesiumContainer = viewer.container;
+      cesiumContainer.addEventListener("dragover", (e) => {
+        e.preventDefault();
+      });
+
+      cesiumContainer.addEventListener("drop", (e) => {
+        e.preventDefault();
+        if (selectedSensorType && currentSensorParam) {
+          const canvasBounds = cesiumContainer.getBoundingClientRect();
+          const x = e.clientX - canvasBounds.left;
+          const y = e.clientY - canvasBounds.top;
+          const windowPosition = new Cesium.Cartesian2(x, y);
+          const earthPosition = viewer.scene.pickPosition(windowPosition);
+
+          if (Cesium.defined(earthPosition)) {
+            createDraggableSensor(
+              selectedSensorType,
+              earthPosition,
+              currentSensorParam
+            );
+          }
+
+          selectedSensorType = null;
+          currentSensorParam = null;
+          draggingSensorItem = null;
+        }
+      });
+
+      // Simulation Controls
+      const playButton = document.getElementById("playButton");
+      const pauseButton = document.getElementById("pauseButton");
+      const resetButton = document.getElementById("resetButton");
+      const clearButton = document.getElementById("clearButton");
+
+      playButton.addEventListener("click", () => {
+        viewer.clock.shouldAnimate = true;
+      });
+      pauseButton.addEventListener("click", () => {
+        viewer.clock.shouldAnimate = false;
+      });
+      resetButton.addEventListener("click", () => {
+        viewer.clock.currentTime = viewer.clock.startTime.clone();
+        viewer.clock.shouldAnimate = false;
+      });
+      clearButton.addEventListener("click", () => {
+        viewer.entities.removeAll();
+        sensorEntities = [];
+      });
+
+      // Display sensor information
+      function displaySensorInfo(sensorType, sensorParam) {
+        const sensorInfoElement = document.getElementById("sensorInfo");
+        sensorInfoElement.innerHTML = `
+        <p><strong>${sensorType}</strong></p>
+        <p>${sensorParam.description}</p>
+        <p>Default Range: ${sensorParam.defaultRange} ${sensorParam.unit}</p>
+        <p>Default Field of View: ${sensorParam.defaultFov}°</p>
+      `;
+      }
+
+      // Place Model at a Specific Location
+      function placeModelAtSearchLocation() {
+        // Read model-type from the drop down menu
+        const modelType = document.getElementById("modelSelect").value;
+        // Read coordinates from input fields
+        const lat = parseFloat(document.getElementById("latitudeInput").value);
+        const lon = parseFloat(document.getElementById("longitudeInput").value);
+
+        // Validate the coordinates
+        if (isNaN(lat) || isNaN(lon)) {
+          alert("Please enter valid coordinates.");
+          return;
+        }
+
+        // Set a small positive altitude so the model is visible.
+        const altitude = 60000; // Adjust this value as needed
+
+        // Convert degrees to Cesium Cartesian3 coordinates (set a default altitude, e.g., 0 or any preferred value)
+        const position = Cesium.Cartesian3.fromDegrees(lon, lat, 0);
+
+        // Optionally, fly the camera near the new model's location for a better view.
+        viewer.camera.flyTo({
+          destination: Cesium.Cartesian3.fromDegrees(lon, lat, altitude + 500), // Raise camera a bit higher.
+          duration: 2,
+        });
+
+        // Create and place the model at the computed position
+        createModel(modelType, position);
+      }
+
+      // Setup parameter controls for the single sensor
+      function setupParameterControls(sensorParam) {
+        const parameterControls = document.getElementById("parameterControls");
+        parameterControls.innerHTML = "";
+
+        // Range Slider
+        if (
+          sensorParam.minRange !== undefined &&
+          sensorParam.maxRange !== undefined
+        ) {
+          const rangeContainer = document.createElement("div");
+          rangeContainer.className = "slider-container";
+
+          const rangeLabel = document.createElement("label");
+          rangeLabel.textContent = `Detection Range (${sensorParam.unit}): ${sensorParam.defaultRange}`;
+
+          const rangeSlider = document.createElement("input");
+          rangeSlider.type = "range";
+          rangeSlider.min = sensorParam.minRange;
+          rangeSlider.max = sensorParam.maxRange;
+          rangeSlider.value = sensorParam.defaultRange;
+          rangeSlider.step = "0.01";
+
+          rangeSlider.addEventListener("input", () => {
+            sensorParam.defaultRange = parseFloat(rangeSlider.value);
+            rangeLabel.textContent = `Detection Range (${sensorParam.unit}): ${sensorParam.defaultRange}`;
+            updateSensorVisual(sensorParam);
+          });
+
+          rangeContainer.appendChild(rangeLabel);
+          rangeContainer.appendChild(rangeSlider);
+          parameterControls.appendChild(rangeContainer);
+        }
+
+        // Field of View Slider
+        if (
+          sensorParam.minFov !== undefined &&
+          sensorParam.maxFov !== undefined
+        ) {
+          const fovContainer = document.createElement("div");
+          fovContainer.className = "slider-container";
+
+          const fovLabel = document.createElement("label");
+          fovLabel.textContent = `Field of View (°): ${sensorParam.defaultFov}`;
+
+          const fovSlider = document.createElement("input");
+          fovSlider.type = "range";
+          fovSlider.min = sensorParam.minFov;
+          fovSlider.max = sensorParam.maxFov;
+          fovSlider.value = sensorParam.defaultFov;
+          fovSlider.step = "1";
+
+          fovSlider.addEventListener("input", () => {
+            sensorParam.defaultFov = parseFloat(fovSlider.value);
+            fovLabel.textContent = `Field of View (°): ${sensorParam.defaultFov}`;
+            updateSensorVisual(sensorParam);
+          });
+
+          fovContainer.appendChild(fovLabel);
+          fovContainer.appendChild(fovSlider);
+          parameterControls.appendChild(fovContainer);
+        }
+
+        // Color Picker
+        const colorContainer = document.createElement("div");
+        colorContainer.className = "color-picker";
+
+        const colorLabel = document.createElement("label");
+        colorLabel.textContent = "Sensor Color:";
+
+        const colorInput = document.createElement("input");
+        colorInput.type = "text";
+        colorInput.id = "colorPicker";
+
+        colorContainer.appendChild(colorLabel);
+        colorContainer.appendChild(colorInput);
+        parameterControls.appendChild(colorContainer);
+
+        // Initialize Spectrum Color Picker
+        $("#colorPicker").spectrum({
+          color: sensorParam.color,
+          showInput: true,
+          preferredFormat: "hex",
+          showPalette: true,
+          palette: [],
+          change: function (color) {
+            sensorParam.color = color.toHexString();
+            updateSensorVisual(sensorParam);
+          },
+        });
+      }
+
+      // Function to update sensor visualization based on parameters
+      function updateSensorVisual(sensorParam) {
+        sensorEntities.forEach((entity) => {
+          if (entity.name === `${sensorParam.type} Sensor`) {
+            const range = sensorParam.defaultRange;
+            const fov = sensorParam.defaultFov;
+            const color = Cesium.Color.fromCssColorString(
+              sensorParam.color
+            ).withAlpha(0.5);
+
+            if (entity.cylinder) {
+              entity.cylinder.length = range;
+              entity.cylinder.bottomRadius =
+                range * Math.tan(Cesium.Math.toRadians(fov / 2));
+              entity.cylinder.material = color;
+            } else if (entity.ellipsoid) {
+              entity.ellipsoid.radii = new Cesium.Cartesian3(
+                range,
+                range,
+                range
+              );
+              entity.ellipsoid.material = color;
+            } else if (entity.point) {
+              entity.point.color = Cesium.Color.fromCssColorString(
+                sensorParam.color
+              );
+            }
+          }
+        });
+      }
+
+      // Create a draggable sensor entity with coverage geometry
+      function createDraggableSensor(sensorType, position, sensorParam) {
+        const range = sensorParam.defaultRange;
+        const fov = sensorParam.defaultFov;
+        const color = Cesium.Color.fromCssColorString(
+          sensorParam.color
+        ).withAlpha(0.5);
+
+        const entityOptions = {
+          position: position,
+          name: `${sensorParam.type} Sensor`,
+          orientation: new Cesium.CallbackProperty(() => {
+            return Cesium.Transforms.headingPitchRollQuaternion(
+              position,
+              new Cesium.HeadingPitchRoll(
+                Cesium.Math.toRadians(sensorParam.heading || 0),
+                Cesium.Math.toRadians(sensorParam.pitch || 0),
+                0
+              )
+            );
+          }, false),
+          label: {
+            text: `${sensorType}`,
+            font: "14pt Orbitron, sans-serif",
+            style: Cesium.LabelStyle.FILL_AND_OUTLINE,
+            fillColor: Cesium.Color.YELLOW,
+            outlineColor: Cesium.Color.BLACK,
+            outlineWidth: 2,
+            verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
+            pixelOffset: new Cesium.Cartesian2(0, -50),
+            disableDepthTestDistance: Number.POSITIVE_INFINITY,
+          },
+        };
+
+        // Cone visualization for Ultrasonic
+        entityOptions.cylinder = {
+          length: range,
+          topRadius: 0.0,
+          bottomRadius: range * Math.tan(Cesium.Math.toRadians(fov / 2)),
+          material: color,
+          outline: true,
+          outlineColor: Cesium.Color.WHITE,
+          numberOfVerticalLines: 0,
+          slices: 128,
+        };
+
+        const sensorEntity = viewer.entities.add(entityOptions);
+        sensorEntities.push(sensorEntity);
+
+        makeEntityDraggable(sensorEntity, sensorParam);
+      }
+
+      // Make an entity (sensor) draggable
+      function makeEntityDraggable(entity, sensorParam) {
+        let isDragging = false;
+        let handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
+
+        // Toggle dragging state with a left click.
+        handler.setInputAction(function (clickEvent) {
+          let pickedObject = viewer.scene.pick(clickEvent.position);
+          if (Cesium.defined(pickedObject) && pickedObject.id === entity) {
+            // Toggle dragging on/off.
+            isDragging = !isDragging;
+            if (isDragging) {
+              viewer.scene.screenSpaceCameraController.enableRotate = false;
+              viewer.container.style.cursor = "move";
+            } else {
+              viewer.scene.screenSpaceCameraController.enableRotate = true;
+              viewer.container.style.cursor = "default";
+              hideTooltip();
+            }
+          }
+        }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+
+        // Update the entity's position on mouse move if dragging is active.
+        handler.setInputAction(function (movement) {
+          if (isDragging && Cesium.defined(movement.endPosition)) {
+            // Use pickPosition for smoother dragging.
+            let newPosition = viewer.scene.pickPosition(movement.endPosition);
+            if (!Cesium.defined(newPosition)) {
+              newPosition = viewer.camera.pickEllipsoid(
+                movement.endPosition,
+                viewer.scene.globe.ellipsoid
+              );
+            }
+            if (Cesium.defined(newPosition)) {
+              entity.position = newPosition;
+              showTooltip(movement.endPosition, "Dragging...");
+            }
+          } else if (Cesium.defined(movement.endPosition)) {
+            // Update the cursor style when hovering.
+            let pickedObject = viewer.scene.pick(movement.endPosition);
+            if (Cesium.defined(pickedObject) && pickedObject.id === entity) {
+              viewer.container.style.cursor = "pointer";
+            } else {
+              viewer.container.style.cursor = "default";
+            }
+          }
+        }, Cesium.ScreenSpaceEventType.MOUSE_MOVE);
+
+        // Optional: if the user releases the left button, disable dragging.
+        handler.setInputAction(function () {
+          if (isDragging) {
+            isDragging = false;
+            viewer.scene.screenSpaceCameraController.enableRotate = true;
+            viewer.container.style.cursor = "default";
+            hideTooltip();
+          }
+        }, Cesium.ScreenSpaceEventType.LEFT_UP);
+      }
+
+      // Tooltip functionality
+      const tooltip = document.getElementById("tooltip");
+      function showTooltip(screenPosition, message) {
+        tooltip.style.left = screenPosition.x + 15 + "px";
+        tooltip.style.top = screenPosition.y + 15 + "px";
+        tooltip.innerHTML = message;
+        tooltip.style.display = "block";
+      }
+      function hideTooltip() {
+        tooltip.style.display = "none";
+      }
+      function getMousePosition(event) {
+        const mousePosition = new Cesium.Cartesian2(
+          event.endPosition.x,
+          event.endPosition.y
+        );
+        return viewer.scene.pickPosition(mousePosition);
+      }
+
+      // ============================
+      // Search Functionality
+      // ============================
+      const searchButton = document.getElementById("searchButton");
+      const latitudeInput = document.getElementById("latitudeInput");
+      const longitudeInput = document.getElementById("longitudeInput");
+      const searchError = document.getElementById("searchError");
+
+      function validateCoordinates(lat, lon) {
+        const latNum = parseFloat(lat);
+        const lonNum = parseFloat(lon);
+        if (isNaN(latNum) || isNaN(lonNum)) return false;
+        if (latNum < -90 || latNum > 90 || lonNum < -180 || lonNum > 180)
+          return false;
+        return true;
+      }
+
+      searchButton.addEventListener("click", () => {
+        const lat = latitudeInput.value.trim();
+        const lon = longitudeInput.value.trim();
+
+        if (!validateCoordinates(lat, lon)) {
+          searchError.style.display = "block";
+          return;
+        }
+        searchError.style.display = "none";
+
+        viewer.camera.flyTo({
+          destination: Cesium.Cartesian3.fromDegrees(
+            parseFloat(lon),
+            parseFloat(lat),
+            5000
+          ),
+          orientation: {
+            heading: Cesium.Math.toRadians(0.0),
+            pitch: Cesium.Math.toRadians(-45.0),
+            roll: 0.0,
+          },
+          duration: 2,
+        });
+      });
+
+      // Allow pressing Enter to trigger search
+      latitudeInput.addEventListener("keyup", (event) => {
+        if (event.key === "Enter") {
+          searchButton.click();
+        }
+      });
+      longitudeInput.addEventListener("keyup", (event) => {
+        if (event.key === "Enter") {
+          searchButton.click();
+        }
+      });
+      // ============================
+      // End of Search Functionality
+      // ============================
+
+      function update3DRotation() {
+        if (!selectedEntity) return;
+
+        const headingDeg = parseFloat(
+          document.getElementById("headingSlider").value
+        );
+        const pitchDeg = parseFloat(
+          document.getElementById("pitchSlider").value
+        );
+        const rollDeg = parseFloat(document.getElementById("rollSlider").value);
+
+        // Update UI labels
+        document.getElementById("headingValue").textContent = headingDeg;
+        document.getElementById("pitchValue").textContent = pitchDeg;
+        document.getElementById("rollValue").textContent = rollDeg;
+
+        // Create a HeadingPitchRoll object (in radians)
+        const hpr = new Cesium.HeadingPitchRoll(
+          Cesium.Math.toRadians(headingDeg),
+          Cesium.Math.toRadians(pitchDeg),
+          Cesium.Math.toRadians(rollDeg)
+        );
+
+        // Ensure we get a valid Cartesian3 from the entity's position
+        const currentPosition = Cesium.Property.getValueOrDefault(
+          selectedEntity.position,
+          Cesium.Cartesian3.ZERO
+        );
+
+        // Update the entity's orientation using the valid position and hpr values
+        selectedEntity.orientation =
+          Cesium.Transforms.headingPitchRollQuaternion(currentPosition, hpr);
+      }
+
+      // Update rotation value in UI
+      document
+        .getElementById("headingSlider")
+        .addEventListener("input", update3DRotation);
+      document
+        .getElementById("pitchSlider")
+        .addEventListener("input", update3DRotation);
+      document
+        .getElementById("rollSlider")
+        .addEventListener("input", update3DRotation);
+    </script>
+  </body>
+</html>

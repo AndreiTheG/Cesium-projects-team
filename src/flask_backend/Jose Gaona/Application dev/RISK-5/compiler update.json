@@ -1,0 +1,150 @@
+import unittest
+from unittest.mock import patch
+from utils.compiler import compile_code
+from utils.simulator import run_simulation
+from utils.data_parser import parse_simulation_log
+from utils.feedback_analyzer import analyze_feedback
+from utils.code_improver import improve_code
+from utils.logger import setup_logger
+import os
+import json
+
+class TestCompiler(unittest.TestCase):
+
+    @patch('utils.compiler.run_subprocess')
+    def test_compile_code_success(self, mock_run_subprocess):
+        toolchain_path = '/fake/riscv'
+        source_path = '/fake/source/pipeline.c'
+        binary_path = '/fake/binary/pipeline.elf'
+
+        # Testing the compilation success
+        compile_code(toolchain_path, source_path, binary_path)
+
+        # Verify that subprocess is called correctly with the right parameters
+        mock_run_subprocess.assert_called_with([
+            '/fake/riscv/bin/riscv32-unknown-elf-gcc',
+            '-o', binary_path,
+            source_path
+        ])
+
+    @patch('utils.compiler.run_subprocess', side_effect=Exception("Compile Error"))
+    def test_compile_code_failure(self, mock_run_subprocess):
+        toolchain_path = '/fake/riscv'
+        source_path = '/fake/source/pipeline.c'
+        binary_path = '/fake/binary/pipeline.elf'
+
+        # Ensure the error is properly raised during compilation failure
+        with self.assertRaises(Exception):
+            compile_code(toolchain_path, source_path, binary_path)
+
+
+class TestPipelineAutomation(unittest.TestCase):
+    
+    @patch('utils.simulator.run_simulation')
+    def test_run_simulation_success(self, mock_run_simulation):
+        binary_path = '/fake/binary/pipeline.elf'
+        
+        # Simulating a successful QEMU run
+        mock_run_simulation.return_value = "Simulation successful"
+        
+        result = run_simulation(binary_path)
+        self.assertEqual(result, "Simulation successful")
+    
+    @patch('utils.data_parser.parse_simulation_log')
+    def test_parse_simulation_log(self, mock_parse_simulation_log):
+        log_data = "Instruction Execution Count: 1000\nPipeline Stalls: 30\nPipeline Hazards: 10"
+        
+        # Simulate log parsing
+        mock_parse_simulation_log.return_value = {
+            'instruction_execution_count': 1000,
+            'pipeline_stalls': 30,
+            'pipeline_hazards': 10
+        }
+        
+        parsed_data = parse_simulation_log(log_data)
+        self.assertEqual(parsed_data['instruction_execution_count'], 1000)
+        self.assertEqual(parsed_data['pipeline_stalls'], 30)
+        self.assertEqual(parsed_data['pipeline_hazards'], 10)
+
+    @patch('utils.feedback_analyzer.analyze_feedback')
+    def test_analyze_feedback(self, mock_analyze_feedback):
+        simulation_data = {
+            'instruction_execution_count': 1000,
+            'pipeline_stalls': 30,
+            'pipeline_hazards': 10
+        }
+        
+        # Simulating feedback analysis
+        mock_analyze_feedback.return_value = "Optimize pipeline design"
+        
+        analysis = analyze_feedback(simulation_data)
+        self.assertEqual(analysis, "Optimize pipeline design")
+    
+    @patch('utils.code_improver.improve_code')
+    def test_improve_code(self, mock_improve_code):
+        pipeline_code = "Initial Pipeline Code"
+        
+        # Simulating pipeline improvement
+        mock_improve_code.return_value = "Improved Pipeline Code"
+        
+        improved_code = improve_code(pipeline_code)
+        self.assertEqual(improved_code, "Improved Pipeline Code")
+
+    def test_complete_pipeline_workflow(self):
+        # This test simulates the entire pipeline workflow, from compilation to improvement
+        toolchain_path = '/fake/riscv'
+        source_path = '/fake/source/pipeline.c'
+        binary_path = '/fake/binary/pipeline.elf'
+        
+        # Compile the code
+        try:
+            compile_code(toolchain_path, source_path, binary_path)
+        except Exception as e:
+            self.fail(f"Compilation failed: {str(e)}")
+        
+        # Run the simulation
+        simulation_log = run_simulation(binary_path)
+        self.assertIn("Simulation successful", simulation_log)
+        
+        # Parse the simulation log
+        parsed_data = parse_simulation_log(simulation_log)
+        self.assertGreater(parsed_data['instruction_execution_count'], 0)
+        
+        # Analyze feedback
+        feedback = analyze_feedback(parsed_data)
+        self.assertEqual(feedback, "Optimize pipeline design")
+        
+        # Improve code based on feedback
+        improved_code = improve_code("Initial Pipeline Code")
+        self.assertEqual(improved_code, "Improved Pipeline Code")
+        
+    @patch('utils.logger.setup_logger')
+    def test_logging_system(self, mock_setup_logger):
+        config_path = os.path.join(os.getcwd(), 'config.json')
+        
+        # Test logger setup with a valid configuration file
+        if not os.path.isfile(config_path):
+            self.fail(f"Configuration file not found at {config_path}")
+        
+        config = self.load_config(config_path)
+        setup_logger(config_path)
+        
+        # Simulate logging action
+        logger = logging.getLogger('command_automation')
+        logger.info("Test log entry")
+        
+        # Check if log file contains the entry
+        log_file = config['logging']['log_file']
+        with open(log_file, 'r') as f:
+            logs = f.read()
+            self.assertIn("Test log entry", logs)
+    
+    def load_config(self, config_path):
+        if not os.path.isfile(config_path):
+            self.fail(f"Configuration file not found at {config_path}")
+        with open(config_path, 'r') as f:
+            config = json.load(f)
+        return config
+
+if __name__ == '__main__':
+    unittest.main()

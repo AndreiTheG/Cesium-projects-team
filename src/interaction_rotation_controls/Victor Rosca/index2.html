@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>OPENQQUANTIFY Cesium Application</title>
+  <!-- Include CesiumJS JavaScript and CSS files -->
+  <script src="https://cesium.com/downloads/cesiumjs/releases/1.121/Build/Cesium/Cesium.js"></script>
+  <link href="https://cesium.com/downloads/cesiumjs/releases/1.121/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+
+  <!-- Include Spectrum Color Picker CSS and JS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/spectrum-colorpicker2/dist/spectrum.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/spectrum-colorpicker2/dist/spectrum.min.js"></script>
+
+  <!-- Include jQuery for Spectrum Color Picker -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  
+  <link rel="stylesheet" href="/cesium_implementation/static/styles/index.css">
+</head>
+<body>
+    <div id="developmentOverlay" class="overlay">
+      <div class="overlay-content">
+        <h1>Under Development</h1>
+        <p>We're working hard to bring you an amazing experience. Have fun and check our development progress every week! Contact us at Connect@OpenQQuantify.com for Business Inquiries.</p>
+        <button id="closeOverlay">Close</button>
+      </div>
+    </div>
+    
+    <div class="panel logo-container">
+      <h1>OPENQQUANTIFY</h1>
+    </div>
+
+    <div class="panel sensor-panel">
+      <h2>Sensors</h2>
+      <ul class="sensor-list" id="sensorList"></ul>
+    </div>
+    
+    <div class="right-container">
+      <div class="panel info-panel">
+        <h2>Sensor Information</h2>
+        <div id="sensorInfo"></div>
+        <div id="rotationInfo"></div>
+      </div>
+    
+      <div class="panel search-panel">
+        <h2>Search Location</h2>
+        <input type="text" id="latitudeInput" placeholder="Enter Latitude" />
+        <input type="text" id="longitudeInput" placeholder="Enter Longitude" />
+        <button id="searchButton">Go To Location</button>
+        <p id="searchError" style="color: #FF0000; display: none;">Invalid coordinates.</p>
+      </div>
+      
+      <!-- Parameter Tuning Panel -->
+      <div class="panel parameter-panel">
+        <h2>Adjust Parameters</h2>
+        <div id="parameterControls">
+          <!-- Controls to adjust sensor parameters will go here -->
+        </div>
+      </div>
+
+      <div class="panel controls-panel">
+        <h2>Simulation Controls</h2> 
+        <button id="playButton">Play Simulation</button>
+        <button id="pauseButton">Pause Simulation</button>
+        <button id="resetButton">Reset Simulation</button>
+        <button id="clearButton">Clear Sensors</button>
+      </div>
+    </div>
+
+    <div id="toolbar">
+      <div class="rotation-panel">
+        <h2>Adjust Rotation</h2>
+        <label for="rotationXSlider">Rotation X:</label>
+        <input type="range" id="rotationXSlider" min="-180" max="180" value="0" />
+        <span id="rotationXValue">0°</span><br>
+        <label for="rotationYSlider">Rotation Y:</label>
+        <input type="range" id="rotationYSlider" min="-180" max="180" value="0" />
+        <span id="rotationYValue">0°</span><br>
+        <label for="rotationZSlider">Rotation Z:</label>
+        <input type="range" id="rotationZSlider" min="-180" max="180" value="0" />
+        <span id="rotationZValue">0°</span>
+      </div>
+
+      <div class="media-controls">
+        <div class="pulse-control">
+          <h3>Pulse</h3>
+          <div class="toggle-buttons">
+            <button id="pulseOffButton">Off</button>
+            <button id="pulseOnButton">On</button>
+          </div>
+        </div>
+        <div class="animation-control">
+          <h3>Animation</h3>
+          <div class="toggle-buttons">
+            <button id="animationOffButton">Off</button>
+            <button id="animationOnButton">On</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div id="cesiumContainer"></div>
+    
+    <script src="/cesium_implementation/static/scripts/close_overlay.js"></script>
+    <script src="/cesium_implementation/static/scripts/main_script.js"></script>
+</body>
+</html> 

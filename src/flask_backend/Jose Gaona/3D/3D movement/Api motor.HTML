@@ -1,0 +1,94 @@
+﻿*app.py*
+```
+from flask import Flask, jsonify
+from cesium import Cesium
+import numpy as np
+
+
+app = Flask(__name__)
+cesium = Cesium(app)
+
+
+Define the motor model
+motor_model = {
+    'name': 'Motor',
+    'position': [0, 0, 0],
+    'orientation': [0, 0, 0],
+    'scale': [1, 1, 1],
+    'geometry': {
+        'type': 'Cylinder',
+        'radius': 0.5,
+        'height': 1.0,
+        'material': {
+            'type': 'Material',
+            'color': '#FF0000'
+        }
+    }
+}
+
+
+Define the motor's rotation animation
+rotation_animation = {
+    'name': 'Rotation',
+    'type': 'Rotate',
+    'axis': [0, 0, 1],
+    'angle': 360.0,
+    'duration': 5.0
+}
+
+
+Define the Cesium scene
+cesium_scene = {
+    'name': 'Motor Spinning Scene',
+    'entities': [motor_model],
+    'animations': [rotation_animation]
+}
+
+
+@app.route('/motor', methods=['GET'])
+def get_motor():
+    return jsonify(cesium_scene)
+
+
+if __name__ == '__main__':
+    app.run(debug=True)
+```
+
+
+*templates/index.html*
+```
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Motor Spinning Model</title>
+    <script src="https://unpkg.com/cesium@1.94/Build/Cesium/Cesium.js"></script>
+    <style>
+        #cesiumContainer {
+            width: 100%;
+            height: 600px;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <div id="cesiumContainer"></div>
+    <script>
+        // Initialize the Cesium viewer
+        const viewer = new Cesium.Viewer('cesiumContainer');
+
+
+        // Load the motor model and rotation animation from the Flask API
+        fetch('/motor')
+            .then(response => response.json())
+            .then(data => {
+                // Add the motor model and rotation animation to the Cesium scene
+                viewer.scene.add(data);
+            });
+    </script>
+</body>
+</html>
+```
+e motor model is then added to the Cesium scene and rotated using the `Rotate` animation.

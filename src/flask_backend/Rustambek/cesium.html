@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>OPENQQUANTIFY Cesium Application</title>
+  
+  <!-- Include CesiumJS JavaScript and CSS files -->
+  <script src="https://cesium.com/downloads/cesiumjs/releases/1.121/Build/Cesium/Cesium.js"></script>
+  <link href="https://cesium.com/downloads/cesiumjs/releases/1.121/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+  
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <style>
+    html, body, #cesiumContainer {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-color: #000;
+    }
+
+    /* Toolbar for draggable items */
+    #toolbar {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      z-index: 1000;
+      background-color: rgba(255, 255, 255, 0.9);
+      padding: 10px;
+      border-radius: 5px;
+      box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+      display: block;
+    }
+
+    .draggable {
+      padding: 10px;
+      margin: 5px;
+      cursor: grab;
+      border: 1px solid black;
+      background-color: lightgray;
+      text-align: center;
+    }
+
+    /* Blinking effect */
+    @keyframes blink {
+      0% { opacity: 1; }
+      50% { opacity: 0.3; }
+      100% { opacity: 1; }
+    }
+
+    .blinking {
+      animation: blink 1s infinite;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Toolbar for draggable items -->
+  <div id="toolbar">
+    <div id="am_modulator" class="draggable" draggable="true">AM Modulator</div>
+    <div id="clover2000" class="draggable" draggable="true">Clover2000</div>
+  </div>
+
+  <!-- Cesium Container -->
+  <div id="cesiumContainer"></div>
+
+  <script>
+    Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJjOGFjNWFjZC0wZDc3LTQ2N2UtOWI0Ni05MzNhMjFhYTE3N2UiLCJpZCI6MjgyMDg1LCJpYXQiOjE3NDEzMjY1MjJ9.0FeAK3XME7ihJlUXpfPAl1VS9WAh-GwGtUk1w4QlupE';
+
+    const viewer = new Cesium.Viewer('cesiumContainer', {
+        terrain: Cesium.Terrain.fromWorldTerrain(),
+        animation: true,
+        timeline: true,
+        shouldAnimate: true
+    });
+
+    // Set initial camera position near the Empire State Building
+    viewer.camera.setView({
+        destination: Cesium.Cartesian3.fromDegrees(-73.9857, 40.7484, 1500),
+        orientation: {
+            heading: Cesium.Math.toRadians(0.0),
+            pitch: Cesium.Math.toRadians(-30.0),
+            roll: 0.0
+        }
+    });
+
+    let selectedItem = null;
+    let dragging = false;
+
+    document.querySelectorAll('.draggable').forEach(item => {
+      item.addEventListener('dragstart', (event) => {
+        selectedItem = event.target.id;
+        dragging = true;
+      });
+    });
+
+    const cesiumContainer = document.getElementById('cesiumContainer');
+
+    cesiumContainer.addEventListener('dragover', (event) => {
+      event.preventDefault();
+    });
+
+    cesiumContainer.addEventListener('drop', async (e) => {
+        e.preventDefault();
+        if (dragging && selectedItem) {
+            const canvasBounds = cesiumContainer.getBoundingClientRect();
+            const x = e.clientX - canvasBounds.left;
+            const y = e.clientY - canvasBounds.top;
+            const windowPosition = new Cesium.Cartesian2(x, y);
+            const earthPosition = viewer.scene.pickPosition(windowPosition);
+
+            if (Cesium.defined(earthPosition)) {
+                createSensor(selectedItem, earthPosition);
+                createModel(earthPosition);
+            }
+
+            dragging = false;
+            selectedItem = null;
+        }
+    });
+
+    function createSensor(type, position) {
+        const entity = viewer.entities.add({
+            position: position,
+            name: type,
+            cylinder: {
+                length: 100,
+                topRadius: 0.0,
+                bottomRadius: 10,
+                material: Cesium.Color.RED.withAlpha(0.5),
+                outline: true,
+                outlineColor: Cesium.Color.WHITE
+            },
+            label: {
+                text: `${type} Signal`,
+                font: '14pt sans-serif',
+                fillColor: Cesium.Color.YELLOW,
+                outlineColor: Cesium.Color.BLACK,
+                outlineWidth: 2,
+                verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
+                pixelOffset: new Cesium.Cartesian2(0, -50)
+            }
+        });
+        entity.label.scale = 1.2;
+        entity.label.font = 'bold 14pt sans-serif';
+        entity.cylinder.material = new Cesium.ColorMaterialProperty(
+          new Cesium.CallbackProperty(() => {
+            return Cesium.Color.RED.withAlpha(Math.abs(Math.sin(viewer.clock.currentTime.secondsOfDay)));
+          }, false)
+        );
+    }
+
+    function createModel(position) {
+        viewer.entities.add({
+            position: position,
+            name: "Radio Model",
+            model: {
+                uri: "/static/radio.glb",
+                scale: 5.0,
+                minimumPixelSize: 64,
+                maximumScale: 500
+            }
+        });
+    }
+  </script>
+</body>
+</html>

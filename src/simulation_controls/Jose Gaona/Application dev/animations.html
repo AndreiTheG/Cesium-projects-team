@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OPENQQUANTIFY - 3D Sensor Simulation</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cesium/1.91/Cesium.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/cesium/1.91/Widgets/widgets.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.css" rel="stylesheet">
+    <style>
+        /* Center the container within the screen */
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(to right, #1e1e1e, #2a2a2a);
+            font-family: 'Arial', sans-serif;
+        }
+
+        /* Fixed-size container for the entire application */
+        #appContainer {
+            width: 1240px;
+            height: 1240px;
+            position: relative;
+            background-color: rgba(0, 0, 0, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+            overflow: hidden;
+        }
+
+        /* Cesium container */
+        #cesiumContainer {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Panels and buttons */
+        .panel {
+            position: absolute;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+            z-index: 20;
+            cursor: pointer;
+        }
+
+        /* Panel layout */
+        .sensor-panel { top: 100px; left: 30px; width: 250px; }
+        .controls-panel { top: 100px; left: 300px; width: 250px; }
+        .search-panel { top: 100px; left: 570px; width: 250px; }
+        .parameter-panel { top: 300px; left: 30px; width: 250px; }
+        .info-panel { top: 300px; left: 300px; width: 250px; }
+
+        /* Futuristic logo and title */
+        .logo-container {
+            position: absolute;
+            top: 10px;
+            left: 20px;
+            font-size: 40px;
+            font-weight: bold;
+            color: #00ff99;
+            z-index: 10;
+        }
+
+        /* Buttons with hover effects */
+        button, .panel:hover {
+            background-color: #00ff99;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        /* Spectrum color picker styling */
+        .sp-container {
+            margin-top: 10px;
+        }
+
+        /* Development overlay */
+        .development-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: rgba(0, 0, 0, 0.8);
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            color: white;
+            font-size: 20px;
+        }
+
+        .development-overlay button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #ff0044;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Application Container -->
+    <div id="appContainer">
+        <div id="cesiumContainer"></div>
+        
+        <!-- Development Overlay -->
+        <div class="development-overlay" id="developmentOverlay">
+            <div>
+                <p>Application under development...</p>
+                <button onclick="document.getElementById('developmentOverlay').style.display = 'none';">Close</button>
+            </div>
+        </div>
+
+        <!-- Logo/Title -->
+        <div class="logo-container">OPENQQUANTIFY</div>
+
+        <!-- Menu -->
+        <div id="menu">
+            <button onclick="loadRocket()">Load Rocket</button>
+            <button onclick="loadSensor()">Add Sensor</button>
+        </div>
+
+        <!-- Panels -->
+        <div id="sensorPanel" class="panel sensor-panel">
+            <h3>Sensor Panel</h3>
+            <p>Drag and drop sensor</p>
+        </div>
+
+        <div id="controlsPanel" class="panel controls-panel">
+            <h3>Controls</h3>
+            <button onclick="playSimulation()">Play</button>
+            <button onclick="pauseSimulation()">Pause</button>
+            <button onclick="resetSimulation()">Reset</button>
+            <button onclick="clearEntities()">Clear</button>
+        </div>
+
+        <div id="searchPanel" class="panel search-panel">
+            <h3>Search</h3>
+            <input type="text" id="latInput" placeholder="Latitude">
+            <input type="text" id="lonInput" placeholder="Longitude">
+            <button onclick="flyToLocation()">Fly to</button>
+        </div>
+
+        <div id="parameterPanel" class="panel parameter-panel">
+            <h3>Parameter Tuning</h3>
+            <label>Range</label>
+            <input type="range" id="rangeSlider" min="1000" max="10000" value="5000">
+            <label>Field of View</label>
+            <input type="range" id="fovSlider" min="10" max="180" value="45">
+            <label>Color</label>
+            <input type="text" id="colorPicker" />
+        </div>
+
+        <div id="infoPanel" class="panel info-panel">
+            <h3>Sensor Information</h3>
+            <p id="sensorInfo">Select a sensor to view details</p>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.js"></script>
+    <script>
+        // Initialize Cesium viewer
+        const viewer = new Cesium.Viewer('cesiumContainer', {
+            terrainProvider: Cesium.createWorldTerrain(),
+            imageryProvider: new Cesium.BingMapsImageryProvider({
+                url: 'https://dev.virtualearth.net/REST/V1/Imagery/Metadata/Aerial?uri=sh&key=YourBingMapsAPIKey'
+            }),
+            shadows: true,
+            skyAtmosphere: true,
+            sceneMode: Cesium.SceneMode.SCENE3D
+        });
+
+        // Set initial camera position
+        viewer.camera.setView({
+            destination: Cesium.Cartesian3.fromDegrees(-74.006, 40.7128, 10000),
+            orientation: {
+                heading: Cesium.Math.toRadians(0),
+                pitch: Cesium.Math.toRadians(-15),
+                roll: 0.0
+            }
+        });
+
+        // Spectrum color picker
+        $('#colorPicker').spectrum({
+            color: "#ff0000",
+            change: function(color) {
+                const hexColor = color.toHexString();
+                console.log("Color picked:", hexColor);
+            }
+        });
+
+        // Play simulation
+        function playSimulation() {
+            viewer.clock.shouldAnimate = true;
+        }
+
+        // Pause simulation
+        function pauseSimulation() {
+            viewer.clock.shouldAnimate = false;
+        }
+
+        // Reset simulation
+        function resetSimulation() {
+            viewer.clock.currentTime = viewer.clock.startTime;
+        }
+
+        // Clear entities
+        function clearEntities() {
+            viewer.entities.removeAll();
+        }
+
+        // Fly to specified location
+        function flyToLocation() {
+            const lat = parseFloat(document.getElementById("latInput").value);
+            const lon = parseFloat(document.getElementById("lonInput").value);
+
+            if (!isNaN(lat) && !isNaN(lon)) {
+                viewer.camera.flyTo({
+                    destination: Cesium.Cartesian3.fromDegrees(lon, lat, 10000)
+                });
+            } else {
+                alert("Invalid coordinates.");
+            }
+        }
+
+        // Load a 3D Rocket model
+        function loadRocket() {
+            viewer.entities.add({
+                name: 'Rocket',
+                position: Cesium.Cartesian3.fromDegrees(-74.006, 40.7128, 10000),
+                model: {
+                    uri: 'https://assets.ion.cesium.com/123456/asset.json',
+                    minimumPixelSize: 64,
+                    maximumScale: 20000
+                }
+            });
+        }
+
+        // Add an ultrasonic sensor
+        function loadSensor() {
+            const sensor = viewer.entities.add({
+                name: 'Ultrasonic Sensor',
+                position: Cesium.Cartesian3.fromDegrees(-74.006, 40.7128, 10000),
+                cylinder: {
+                    length: 5000

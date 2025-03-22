@@ -1,0 +1,100 @@
+﻿```
+// Import Cesium
+const Cesium = require('cesium');
+
+
+// Create a Cesium Viewer
+const viewer = new Cesium.Viewer('cesiumContainer');
+
+
+// Define the sensors and satellite positions
+const sensor1Position = Cesium.Cartesian3.fromDegrees(longitude: -100.0, latitude: 40.0, height: 0.0);
+const sensor2Position = Cesium.Cartesian3.fromDegrees(longitude: -105.0, latitude: 40.0, height: 0.0);
+const satellitePosition = Cesium.Cartesian3.fromDegrees(longitude: -102.5, latitude: 40.0, height: 200000.0);
+
+
+// Create 3D objects for the sensors and satellite
+const sensor1Entity = viewer.entities.add({
+  name: 'Sensor 1',
+  position: sensor1Position,
+  point: {
+    pixelSize: 10,
+    color: Cesium.Color.RED
+  }
+});
+
+
+const sensor2Entity = viewer.entities.add({
+  name: 'Sensor 2',
+  position: sensor2Position,
+  point: {
+    pixelSize: 10,
+    color: Cesium.Color.BLUE
+  }
+});
+
+
+const satelliteEntity = viewer.entities.add({
+  name: 'Satellite',
+  position: satellitePosition,
+  point: {
+    pixelSize: 10,
+    color: Cesium.Color.YELLOW
+  }
+});
+
+
+// Simulate signal transmission from sensors to satellite
+const signal1 = new Cesium.Entity({
+  name: 'Signal 1',
+  polyline: {
+    positions: [sensor1Position, satellitePosition],
+    material: Cesium.Material.fromType('Color', {
+      color: Cesium.Color.RED
+    })
+  }
+});
+
+
+const signal2 = new Cesium.Entity({
+  name: 'Signal 2',
+  polyline: {
+    positions: [sensor2Position, satellitePosition],
+    material: Cesium.Material.fromType('Color', {
+      color: Cesium.Color.BLUE
+    })
+  }
+});
+
+
+viewer.entities.add(signal1);
+viewer.entities.add(signal2);
+
+
+// Animate the signals
+const clock = new Cesium.Clock();
+viewer.clock = clock;
+
+
+const signal1Position = signal1.polyline.positions;
+const signal2Position = signal2.polyline.positions;
+
+
+clock.onTick.addEventListener(() => {
+  // Update signal positions
+  signal1Position[0] = Cesium.Cartesian3.fromDegrees(longitude: -100.0 + Math.sin(clock.currentTime) * 0.1, latitude: 40.0, height: 0.0);
+  signal2Position[0] = Cesium.Cartesian3.fromDegrees(longitude: -105.0 + Math.cos(clock.currentTime) * 0.1, latitude: 40.0, height: 0.0);
+});
+
+
+// Fly to the satellite
+viewer.camera.flyTo({
+  destination: satellitePosition,
+  orientation: {
+    heading: Cesium.Math.toRadians(0),
+    pitch: Cesium.Math.toRadians(-90),
+    roll: Cesium.Math.toRadians(0)
+  },
+  duration: 2.0
+});
+```

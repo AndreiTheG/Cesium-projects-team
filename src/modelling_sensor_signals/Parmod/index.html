@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OPENQQUANTIFY - Cesium 3D Environment</title>
+    <!-- Using CDN for Cesium to avoid path issues -->
+    <script src="https://cesium.com/downloads/cesiumjs/releases/1.115/Build/Cesium/Cesium.js"></script>
+    <link href="https://cesium.com/downloads/cesiumjs/releases/1.115/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.1/spectrum.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.1/spectrum.min.css" />
+    <link rel="stylesheet" href="styles.css">
+    <script src="app.js" defer></script>
+</head>
+<body>
+    <div id="cesiumContainer"></div>
+    <div id="developmentOverlay">
+        <h2>Under Development</h2>
+        <p>We're working hard to bring you an amazing experience. Have fun and check our development progress every week. Contact us at Connect@OpenQQuantify.com for Business Inquiries.</p>
+        <button onclick="document.getElementById('developmentOverlay').style.display = 'none';">Close</button>
+    </div>
+    <div class="panel logo-container">OPENQQUANTIFY</div>
+    <div class="panel sensor-panel">
+        <h3>Sensors & Models</h3>
+        <div class="draggable" draggable="true" id="Ultrasonic">Ultrasonic</div>
+        <div class="draggable" draggable="true" id="Radar">Radar</div>
+        <div class="draggable" draggable="true" id="LiDAR">LiDAR</div>
+        <div class="draggable" draggable="true" id="Infrared">Infrared</div>
+        <div class="draggable" draggable="true" id="WiFi">Wi-Fi</div>
+        <div class="draggable" draggable="true" id="Bluetooth">Bluetooth</div>
+        <div class="draggable" draggable="true" id="Proximity">Proximity</div>
+        <div class="draggable" draggable="true" id="Sound">Sound</div>
+    </div>
+    <div class="panel rocket-panel">
+        <h3>Launch Models</h3>
+        <label for="modelSelect">Select Model:</label>
+        <select id="modelSelect">
+            <option value="FighterPlan">FighterPlan</option>
+            <option value="Rocket">Rocket</option>
+            <option value="Satelite">Satelite</option>
+            <option value="PSLV_C40">PSLV_C40</option>
+            <option value="AGMS">AGMS</option>
+         
+        </select>
+        <button id="launchModelButton">Launch Model</button>
+    </div>
+    <div class="panel controls-panel">
+        <h3>Simulation Controls</h3>
+        <button id="playButton" title="Start the simulation">Play Simulation</button>
+        <button id="pauseButton" title="Pause the simulation">Pause Simulation</button>
+        <button id="resetButton" title="Reset the simulation to the starting point">Reset Simulation</button>
+        <button id="clearButton" title="Remove all sensors and models from the globe">Clear Sensors</button>
+    </div>
+    <div class="panel search-panel">
+        <h3>Search Location</h3>
+        <label for="lat">Latitude:</label>
+        <input type="number" id="lat" placeholder="Enter Latitude (e.g., 40.7128)" title="Enter latitude between -90 and 90" /><br>
+        <label for="lon">Longitude:</label>
+        <input type="number" id="lon" placeholder="Enter Longitude (e.g., -74.0060)" title="Enter longitude between -180 and 180" /><br>
+        <button id="flyToButton" title="Fly to the specified latitude and longitude">Go To Location</button>
+        <p id="errorMessage"></p>
+    </div>
+    <div class="panel info-panel">
+        <h3>Sensor Information</h3>
+        <p id="sensorInfo">Select a sensor to see details.</p>
+    </div>
+    <div class="panel parameter-panel">
+        <h3>Adjust Parameters</h3>
+        <div id="parameterControls"></div>
+    </div>
+    <div id="meter">Altitude: 0 m</div>
+</body>
+</html>

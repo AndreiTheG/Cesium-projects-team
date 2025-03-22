@@ -1,0 +1,51 @@
+{
+    "openai_api_key": "your-openai-api-key-here",
+    "riscv_toolchain_path": "~/riscv",
+    "install_dir": "~/riscv-toolchain-install-guide",
+    "sample_dir": "~/riscv_pipeline_manager/samples",
+    "qemu_machine_type": "sifive_u",
+    "qemu_options": ["-nographic", "-bios", "none"],
+    "improvement_cycles": 3,
+    "prompts": {
+      "pipeline_generation": "Generate a RISC-V 32-bit pipeline C program with complex hazard handling, efficient forwarding mechanisms, and instruction-level optimizations.",
+      "command_interpreter": "Translate the user's natural language command into a system command for pipeline generation, compilation, simulation, and analysis."
+    },
+    "command_automation": {
+      "allowed_commands": [
+        "generate_pipeline_code",
+        "compile_code",
+        "run_simulation",
+        "parse_simulation_log",
+        "analyze_feedback",
+        "improve_code"
+      ]
+    },
+    "logging": {
+      "level": "INFO",
+      "log_file": "~/riscv_pipeline_manager/logs/command_automation.log"
+    },
+    "dependencies": {
+      "required_packages": [
+        "qemu",
+        "riscv64-unknown-elf-gcc",
+        "python3",
+        "pytest"
+      ],
+      "ensure_virtualenv": true
+    },
+    "notification_system": {
+      "enabled": false,
+      "email": {
+        "smtp_server": "smtp.example.com",
+        "smtp_port": 587,
+        "sender_email": "your-email@example.com",
+        "recipient_email": "recipient-email@example.com",
+        "subject": "RISC-V Pipeline Workflow Notification"
+      },
+      "slack": {
+        "enabled": false,
+        "webhook_url": "https://hooks.slack.com/services/your/slack/webhook"
+      }
+    }
+  }
+  

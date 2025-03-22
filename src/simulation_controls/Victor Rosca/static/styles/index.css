@@ -1,0 +1,415 @@
+html, body, #cesiumContainer {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #000000;
+}
+body {
+  font-family: 'Orbitron', sans-serif;
+  color: #00FFFF;
+  background: linear-gradient(135deg, #001F3F 0%, #000000 100%);
+}
+.draggable {
+  width: 100px;
+  padding: 10px;
+  margin: 10px;
+  cursor: pointer;
+  border: 1px solid black;
+  background-color: lightgray;
+  text-align: center;
+}
+#toolbar {
+  position: absolute;
+  top: 0px;
+  left: 300px;
+  z-index: 100;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 10px;
+}
+/* Futuristic Panels */
+.panel {
+  position: absolute;
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.9);
+  padding: 20px;
+  border-radius: 15px;
+  border: 2px solid rgba(0, 255, 255, 0.8);
+  box-shadow: 0px 0px 20px 10px rgba(0, 255, 255, 0.3);
+  color: #00FFFF;
+  font-size: 14px;
+  transition: transform 0.3s ease-in-out;
+}
+.panel:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 0px 30px 10px rgba(0, 255, 255, 0.6);
+}
+.panel h2 {
+  margin-top: 0;
+  font-size: 24px;
+  text-align: center;
+  color: #00FFFF;
+  text-shadow: 0px 0px 10px #00FFFF;
+  letter-spacing: 2px;
+}
+.panel h1 {
+  font-size: 36px;
+  text-align: center;
+  color: #FFFFFF;
+  text-shadow: 0px 0px 20px #00FFFF;
+  letter-spacing: 4px;
+}
+
+/* Sensor List */
+.sensor-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 750px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #00FFFF #001F3F;
+}
+.sensor-list::-webkit-scrollbar {
+  width: 8px;
+}
+.sensor-list::-webkit-scrollbar-thumb {
+  background-color: #00FFFF;
+  border-radius: 10px;
+}
+.sensor-list::-webkit-scrollbar-track {
+  background-color: #001F3F;
+}
+.sensor-list li {
+  margin-bottom: 15px;
+  text-align: center;
+}
+.sensor-item {
+  width: 80%;
+  height: 60px;
+  margin: 0 auto;
+  cursor: pointer;
+  border: 2px solid rgba(0, 255, 255, 0.8);
+  border-radius: 15px;
+  background: linear-gradient(135deg, rgba(0, 255, 255, 0.1), rgba(0, 0, 0, 0.9));
+  transition: background-color 0.3s, box-shadow 0.3s, transform 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  box-shadow: 0px 0px 15px 5px rgba(0, 255, 255, 0.4);
+}
+.sensor-item:hover {
+  background-color: #00FFFF;
+  color: #000;
+  box-shadow: 0px 0px 15px 5px #00FFFF;
+  transform: translateY(-5px);
+}
+.sensor-item img {
+  width: 40px;
+  height: 40px;
+}
+.sensor-name {
+  font-size: 15px;
+  color: #FFFFFF;
+  text-shadow: 0px 0px 5px #00FFFF;
+  width: 70%;
+  text-align: left;
+}
+
+/* Controls Panel */
+.controls-panel button {
+  width: 100%;
+  padding: 15px;
+  font-size: 18px;
+  cursor: pointer;
+  border: 2px solid rgba(0, 255, 255, 0.8);
+  border-radius: 10px;
+  background: linear-gradient(135deg, rgba(0, 255, 255, 0.1), rgba(0, 0, 0, 0.9));
+  color: #00FFFF;
+  margin-bottom: 15px;
+  box-shadow: 0px 0px 15px 5px rgba(0, 255, 255, 0.4);
+  transition: background-color 0.3s, box-shadow 0.3s, transform 0.2s;
+}
+.controls-panel button:hover {
+  background-color: #00FFFF;
+  color: #000;
+  box-shadow: 0px 0px 20px 10px #00FFFF;
+  transform: translateY(-5px);
+}
+
+/* Positions */
+.logo-container {
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 350px;
+  text-align: center;
+  padding: 15px;
+  font-size: 28px;
+  margin-top: 5px;
+  /* Adăugăm următoarele proprietăți */
+  transition: none !important; /* Dezactivează orice tranziție */
+  transform-origin: left center; /* Ancorăm transformarea pe partea stângă */
+}
+
+/* Dezactivăm efectul de hover specific pentru logo */
+.logo-container:hover {
+  transform: translateX(-50%) scale(1) !important; /* Menținem poziția inițială */
+  box-shadow: none !important;
+}
+
+.sensor-panel {
+  position: absolute;
+  top: 0px;
+  left: 20px;           /* Păstrează poziția pe stânga */
+  width: 220px;         /* Ajustează lățimea după necesitate */
+  max-height: 80vh;     /* Înălțime maximă pentru a preveni extinderea excesivă */
+  overflow-y: auto;     /* Apare scrollbar intern dacă conținutul este prea mare */
+}
+
+.right-container {
+  position: absolute;
+  top: 38px;
+  right: 20px;
+  width: 320px;
+  height: 90vh; /* Înălțimea containerului: 90% din viewport */
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Spațiu între panouri */
+}
+
+/* Asigură-te că panourile din containerul din dreapta nu mai au poziționare absolută */
+.right-container .panel {
+  position: relative;
+}
+
+
+.info-panel {
+  flex: 3; /* Aproximativ 30% din spațiul disponibil */
+  overflow-y: auto;
+}
+
+.search-panel {
+  flex: 1.5; /* Aproximativ 15% din spațiul disponibil */
+  overflow-y: auto;
+}
+
+.parameter-panel {
+  flex: 3; /* Aproximativ 30% din spațiul disponibil */
+  overflow-y: auto;
+}
+
+.controls-panel {
+  flex: 1.5; /* Aproximativ 15% din spațiul disponibil */
+  overflow-y: auto;
+}
+
+
+/* make the title to be on 1 single line */
+.controls-panel h2 {
+  white-space: nowrap; 
+}
+
+.search-panel input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 2px solid rgba(0, 255, 255, 0.8);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #00FFFF;
+  font-size: 16px;
+  box-shadow: 0px 0px 10px 2px rgba(0, 255, 255, 0.3);
+  transition: background-color 0.3s, box-shadow 0.3s;
+  /* Adaugă următoarele proprietăți */
+  box-sizing: border-box; /* Include padding-ul în lățimea totală */
+  overflow-x: hidden; /* Ascunde overflow-ul orizontal */
+  white-space: nowrap; 
+  text-overflow: ellipsis;
+}
+
+.search-panel input[type="text"]:focus {
+  background: rgba(255, 255, 255, 0.2);
+  outline: none;
+  box-shadow: 0px 0px 15px 3px rgba(0, 255, 255, 0.5);
+}
+.search-panel button {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  border: 2px solid rgba(0, 255, 255, 0.8);
+  border-radius: 10px;
+  background: linear-gradient(135deg, rgba(0, 255, 255, 0.1), rgba(0, 0, 0, 0.9));
+  color: #00FFFF;
+  box-shadow: 0px 0px 10px 2px rgba(0, 255, 255, 0.3);
+  transition: background-color 0.3s, box-shadow 0.3s, transform 0.2s;
+}
+.search-panel button:hover {
+  background-color: #00FFFF;
+  color: #000;
+  box-shadow: 0px 0px 15px 5px #00FFFF;
+  transform: translateY(-3px);
+}
+
+/* Slider Styles */
+.slider-container {
+  margin: 10px 0;
+  padding: 8px;
+  background: rgba(40, 40, 40, 0.8);
+  border-radius: 5px;
+}
+
+.slider-container label {
+  display: block;
+  margin-bottom: 5px;
+  color: #00FFFF;
+  text-shadow: 0px 0px 5px #00FFFF;
+  font-size: 16px;
+}
+
+.slider-container input[type="range"] {
+  width: 80%;
+  margin-right: 10px;
+}
+
+/* Color Picker */
+.color-picker {
+  margin: 20px 0;
+}
+/* Tooltip Styles */
+.tooltip {
+  position: absolute;
+  z-index: 20;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #00FFFF;
+  padding: 10px;
+  border-radius: 8px;
+  pointer-events: none;
+  font-size: 16px;
+  text-shadow: 0px 0px 10px #00FFFF;
+  box-shadow: 0px 0px 10px 5px rgba(0, 255, 255, 0.6);
+  display: none; /* Initially hidden */
+}
+/* Under Development Overlay Styles */
+.overlay {
+  position: fixed; /* Position the overlay relative to the viewport */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.85); /* Semi-transparent black background */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000; /* Ensure the overlay sits above all other elements */
+}
+.overlay-content {
+  text-align: center;
+  color: #00FFFF;
+  font-family: 'Orbitron', sans-serif;
+  padding: 40px;
+  background: rgba(0, 0, 0, 0.7);
+  border: 3px solid #00FFFF;
+  border-radius: 15px;
+  box-shadow: 0px 0px 30px 10px rgba(0, 255, 255, 0.6);
+}
+.overlay-content h1 {
+  font-size: 48px;
+  margin-bottom: 20px;
+  text-shadow: 0px 0px 10px #00FFFF;
+}
+.overlay-content p {
+  font-size: 24px;
+  margin-bottom: 30px;
+  text-shadow: 0px 0px 5px #00FFFF;
+}
+.overlay-content button {
+  padding: 15px 30px;
+  font-size: 18px;
+  cursor: pointer;
+  border: 2px solid #00FFFF;
+  border-radius: 10px;
+  background-color: #001F3F;
+  color: #00FFFF;
+  transition: background-color 0.3s, color 0.3s, transform 0.2s;
+}
+.overlay-content button:hover {
+  background-color: #00FFFF;
+  color: #001F3F;
+  transform: scale(1.05);
+}
+
+
+
+
+/*Pulse and Animation Button*/
+.media-controls {
+  margin-top: 20px;
+  border-top: 2px solid rgba(0, 255, 255, 0.5);
+  padding-top: 15px;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.media-controls .pulse-control,
+.media-controls .animation-control {
+  flex: 1;
+  text-align: center;
+}
+
+.media-controls h3 {
+  color: #00FFFF;
+  margin-bottom: 10px;
+  text-shadow: 0px 0px 5px #00FFFF;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.media-controls .toggle-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.media-controls .toggle-buttons button {
+  flex: 1;
+  padding: 10px;
+  margin: 0;
+  font-size: 14px;
+  cursor: pointer;
+  border: 2px solid rgba(0, 255, 255, 0.8);
+  border-radius: 8px;
+  background: linear-gradient(135deg, rgba(0, 255, 255, 0.1), rgba(0, 0, 0, 0.9));
+  color: #00FFFF;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.media-controls .toggle-buttons button:hover {
+  background: linear-gradient(135deg, rgba(0, 255, 255, 0.3), rgba(0, 0, 0, 0.9));
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+  transform: translateY(-2px);
+}
+
+.media-controls .toggle-buttons button.active {
+  background-color: #00FFFF;
+  color: #001F3F;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.7);
+}
+
+#audioOnButton, #animationOnButton {
+  background: linear-gradient(135deg, rgba(0, 150, 255, 0.2), rgba(0, 0, 0, 0.9));
+}
+
+#audioOffButton, #animationOffButton {
+  background: linear-gradient(135deg, rgba(255, 50, 50, 0.2), rgba(0, 0, 0, 0.9));
+}
+
+
+/* Import Orbitron Font */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap'); 

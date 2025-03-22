@@ -1,0 +1,200 @@
+import os
+import logging
+import subprocess
+import json
+from datetime import datetime
+import openai
+
+# Configure logging
+logging.basicConfig(
+    level=logging.DEBUG,  # Set to DEBUG for detailed log output
+    format="%(asctime)s - %(levelname)s - %(message)s",
+    handlers=[
+        logging.FileHandler("riscv_pipeline_manager.log"),
+        logging.StreamHandler()
+    ]
+)
+
+logger = logging.getLogger(__name__)
+
+# Constants (use configuration values here)
+OPENAI_API_KEY = "your-openai-api-key"
+RISC_V_TOOLCHAIN_PATH = "~/projects/riscv/install/rv32i"
+QEMU_MACHINE_TYPE = "sifive_u"
+QEMU_OPTIONS = ["-nographic", "-bios", "none", "-machine", "sifive_u", "-m", "128M"]
+SIMULATION_LOG_PATH = "simulation.log"
+IMPROVEMENT_CYCLES = 3
+GENERATED_PIPELINE_CODE_PATH = "generated_pipeline.c"
+
+
+def generate_pipeline_code():
+    logger.info("Starting pipeline code generation using OpenAI.")
+    try:
+        openai.api_key = OPENAI_API_KEY
+        prompt = """Generate a RISC-V 32-bit pipeline C program implementing a 5-stage pipeline 
+                    (Fetch, Decode, Execute, Memory, Write-back). Include support for ADD, SUB, 
+                    LOAD, STORE, and BRANCH instructions."""
+        response = openai.Completion.create(
+            model="text-davinci-003", prompt=prompt, max_tokens=1024
+        )
+        code = response.choices[0].text.strip()
+        
+        # Save generated pipeline code to file
+        with open(GENERATED_PIPELINE_CODE_PATH, 'w') as code_file:
+            code_file.write(code)
+        logger.info(f"Pipeline code successfully generated and saved to {GENERATED_PIPELINE_CODE_PATH}")
+        return GENERATED_PIPELINE_CODE_PATH
+
+    except Exception as e:
+        logger.error(f"Error generating pipeline code: {e}")
+        raise
+
+
+def compile_code():
+    logger.info("Starting compilation of generated pipeline code.")
+    try:
+        compile_command = f"{RISC_V_TOOLCHAIN_PATH}/bin/riscv32-unknown-elf-gcc -o pipeline.elf {GENERATED_PIPELINE_CODE_PATH}"
+        result = subprocess.run(compile_command, shell=True, capture_output=True, text=True)
+        
+        if result.returncode != 0:
+            logger.error(f"Compilation failed: {result.stderr}")
+            raise RuntimeError(f"Compilation failed with error: {result.stderr}")
+        
+        logger.info("Pipeline code compiled successfully into pipeline.elf")
+        return "pipeline.elf"
+    
+    except Exception as e:
+        logger.error(f"Error during compilation: {e}")
+        raise
+
+
+def run_simulation(elf_binary):
+    logger.info(f"Running simulation with QEMU using binary {elf_binary}.")
+    try:
+        qemu_command = f"qemu-system-riscv32 {QEMU_OPTIONS} -kernel {elf_binary}"
+        result = subprocess.run(qemu_command, shell=True, capture_output=True, text=True)
+        
+        if result.returncode != 0:
+            logger.error(f"QEMU simulation failed: {result.stderr}")
+            raise RuntimeError(f"QEMU simulation failed with error: {result.stderr}")
+        
+        logger.info("QEMU simulation completed successfully.")
+        # Simulate saving the log to a file
+        with open(SIMULATION_LOG_PATH, 'w') as log_file:
+            log_file.write(result.stdout)
+        
+        return SIMULATION_LOG_PATH
+    
+    except Exception as e:
+        logger.error(f"Error running simulation: {e}")
+        raise
+
+
+def parse_simulation_log(log_path):
+    logger.info("Parsing simulation log to extract data.")
+    if not os.path.isfile(log_path):
+        logger.error(f"Log file not found at {log_path}")
+        raise FileNotFoundError(f"Log file not found at {log_path}")
+    
+    data = {}
+    try:
+        with open(log_path, 'r') as log_file:
+            output = log_file.read()
+            logger.debug(f"Simulation Log Content: {output[:500]}...")  # Displaying first 500 characters for brevity
+
+            # Example metrics extraction (to be extended)
+            for line in output.splitlines():
+                if "Instructions Executed:" in line:
+                    data['instructions_executed'] = int(line.split(":")[1].strip())
+                    logger.debug(f"Extracted instructions_executed: {data['instructions_executed']}")
+                elif "Stalls:" in line:
+                    data['stalls'] = int(line.split(":")[1].strip())
+                    logger.debug(f"Extracted stalls: {data['stalls']}")
+        
+        logger.info(f"Simulation data parsed successfully: {data}")
+        return data
+    
+    except Exception as e:
+        logger.error(f"Error parsing simulation log: {e}")
+        raise
+
+
+def analyze_feedback(simulation_data):
+    logger.info("Analyzing simulation data for feedback.")
+    try:
+        # Example of sending data to OpenAI for analysis
+        openai.api_key = OPENAI_API_KEY
+        prompt = f"Analyze the following simulation data and provide insights on pipeline performance: {json.dumps(simulation_data)}"
+        response = openai.Completion.create(
+            model="text-davinci-003", prompt=prompt, max_tokens=1024
+        )
+        analysis = response.choices[0].text.strip()
+        logger.info(f"Analysis result: {analysis}")
+        return analysis
+    
+    except Exception as e:
+        logger.error(f"Error during feedback analysis: {e}")
+        raise
+
+
+def improve_code(analysis):
+    logger.info("Improving pipeline code based on analysis.")
+    try:
+        # Example of code improvement prompt to OpenAI
+        openai.api_key = OPENAI_API_KEY
+        prompt = f"Based on the following analysis, suggest and implement improvements to the RISC-V pipeline code: {analysis}"
+        response = openai.Completion.create(
+            model="text-davinci-003", prompt=prompt, max_tokens=1024
+        )
+        improved_code = response.choices[0].text.strip()
+        
+        # Save the improved code
+        with open(GENERATED_PIPELINE_CODE_PATH, 'w') as code_file:
+            code_file.write(improved_code)
+        logger.info(f"Pipeline code improved and saved to {GENERATED_PIPELINE_CODE_PATH}")
+        
+        return GENERATED_PIPELINE_CODE_PATH
+    
+    except Exception as e:
+        logger.error(f"Error improving pipeline code: {e}")
+        raise
+
+
+def run_automated_workflow():
+    logger.info("Starting automated pipeline workflow.")
+    
+    try:
+        # 1. Generate pipeline code
+        generate_pipeline_code()
+        
+        # 2. Compile the code
+        elf_binary = compile_code()
+        
+        # 3. Run simulation
+        simulation_log_path = run_simulation(elf_binary)
+        
+        # 4. Parse simulation log
+        simulation_data = parse_simulation_log(simulation_log_path)
+        
+        # 5. Analyze feedback
+        analysis = analyze_feedback(simulation_data)
+        
+        # 6. Improve code based on analysis
+        for cycle in range(IMPROVEMENT_CYCLES):
+            logger.info(f"Improvement cycle {cycle + 1}/{IMPROVEMENT_CYCLES}")
+            improved_code_path = improve_code(analysis)
+            
+            # Re-compile and re-run simulation in each improvement cycle
+            elf_binary = compile_code()
+            simulation_log_path = run_simulation(elf_binary)
+            simulation_data = parse_simulation_log(simulation_log_path)
+            analysis = analyze_feedback(simulation_data)
+
+    except Exception as e:
+        logger.error(f"Automated pipeline workflow failed: {e}")
+        raise
+
+
+# Execute the automated workflow
+if __name__ == "__main__":
+    run_automated_workflow()

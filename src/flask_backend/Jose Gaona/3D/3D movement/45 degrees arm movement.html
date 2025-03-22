@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CesiumJS Robotic Arm Animation</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cesium/1.97/Cesium.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/cesium/1.97/Widgets/widgets.css" rel="stylesheet">
+    <style>
+        #cesiumContainer {
+            width: 100%;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="cesiumContainer"></div>
+
+    <script>
+        // Initialize the Cesium Viewer
+        const viewer = new Cesium.Viewer("cesiumContainer");
+
+        // San Francisco Coordinates (latitude, longitude)
+        const sanFranciscoLat = 37.7749;
+        const sanFranciscoLon = -122.4194;
+
+        // Function to get a random location in San Francisco
+        function getRandomPositionInSF() {
+            const offsetLat = (Math.random() - 0.5) * 0.02;  // Random latitude offset
+            const offsetLon = (Math.random() - 0.5) * 0.02;  // Random longitude offset
+            const altitude = 10;  // Fixed altitude for simplicity
+
+            return Cesium.Cartesian3.fromDegrees(sanFranciscoLon + offsetLon, sanFranciscoLat + offsetLat, altitude);
+        }
+
+        // Create a random position in San Francisco
+        const startPosition = getRandomPositionInSF();
+
+        // Create the 3D robotic arm model (replace with your robotic arm model URL)
+        const roboticArmEntity = viewer.entities.add({
+            name: "Robotic Arm",
+            position: startPosition,
+            model: {
+                uri: 'https://example.com/robotic-arm.glb', // Replace with your robotic arm model URL
+                minimumPixelSize: 64,
+                maximumScale: 200,
+            }
+        });
+
+        // Function to animate the robotic arm rotation (45 degrees left and right)
+        const angle = Cesium.Math.toRadians(45);  // 45 degrees in radians
+        let rotationDirection = 1;  // 1 for right, -1 for left
+        let currentRotation = 0;
+
+        // Create a function to update the robotic arm's rotation
+        function updateRotation() {
+            currentRotation += rotationDirection * 0.01;  // Change the rotation in small increments
+            if (currentRotation >= angle || currentRotation <= -angle) {
+                rotationDirection *= -1;  // Reverse the direction once it reaches 45 degrees or -45 degrees
+            }
+
+            // Apply the rotation to the robotic arm model
+            roboticArmEntity.orientation = Cesium.Transforms.headingPitchRollQuaternion(
+                roboticArmEntity.position.getValue(viewer.clock.currentTime),  // Position
+                new Cesium.HeadingPitchRoll(
+                    currentRotation,  // Heading
+                    0,                // Pitch
+                    0                 // Roll
+                )
+            );
+        }
+
+        // Set up the update loop for animation
+        viewer.clock.onTick.addEventListener(function () {
+            updateRotation();
+        });
+
+        // Fly to the randomized location to center the view
+        viewer.camera.flyTo({
+            destination: startPosition,
+            duration: 3,  // 3 seconds duration for smooth transition
+        });
+
+        // Enable Cesium animations
+        viewer.clock.shouldAnimate = true;
+    </script>
+</body>
+</html>

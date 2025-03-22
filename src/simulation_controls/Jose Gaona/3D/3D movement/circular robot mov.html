@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CesiumJS Circular Movement</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cesium/1.97/Cesium.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/cesium/1.97/Widgets/widgets.css" rel="stylesheet">
+    <style>
+        #cesiumContainer {
+            width: 100%;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="cesiumContainer"></div>
+
+    <script>
+        // Initialize the Cesium Viewer
+        const viewer = new Cesium.Viewer("cesiumContainer");
+
+        // Generate a random position (latitude, longitude, altitude)
+        function getRandomPosition() {
+            const lat = Math.random() * 180 - 90;  // Latitude between -90 and 90
+            const lon = Math.random() * 360 - 180;  // Longitude between -180 and 180
+            const altitude = Math.random() * 5000 + 1000;  // Altitude between 1000 and 6000 meters
+            return Cesium.Cartesian3.fromDegrees(lon, lat, altitude);
+        }
+
+        // Create the random start position for the object
+        const startPosition = getRandomPosition();
+
+        // Create a random path for circular motion (center position and radius)
+        const radius = 20000;  // radius of the circular path in meters
+        const centerPosition = Cesium.Cartesian3.fromDegrees(0, 0, 1000); // Center of the circle
+        const pathLength = 360; // Full circle (in degrees)
+
+        // Create a 3D model entity
+        const entity = viewer.entities.add({
+            name: "Flying Object",
+            position: startPosition,
+            model: {
+                uri: 'https://example.com/3d-model.glb', // Replace with a valid 3D model URL
+                minimumPixelSize: 64
+            }
+        });
+
+        // Create a Circular Path
+        const timeInterval = 5;  // Time between position updates in seconds
+        let currentTime = 0;  // Start at time zero
+
+        const sampledPosition = new Cesium.SampledPositionProperty();
+
+        // Animate the object in a circular path
+        const numberOfSteps = 360;  // Number of steps in the circle
+
+        for (let i = 0; i <= numberOfSteps; i++) {
+            const angle = Cesium.Math.toRadians(i);  // Angle in radians
+            const x = centerPosition.x + radius * Math.cos(angle);  // X coordinate of the circle
+            const y = centerPosition.y + radius * Math.sin(angle);  // Y coordinate of the circle
+            const z = centerPosition.z + 1000;  // Altitude stays constant for simplicity
+
+            // Add the new position at each step
+            const position = new Cesium.Cartesian3(x, y, z);
+            sampledPosition.addSample(Cesium.JulianDate.addSeconds(viewer.clock.currentTime, currentTime), position);
+
+            currentTime += timeInterval;  // Increase time
+        }
+
+        // Assign the position to the entity
+        entity.position = sampledPosition;
+
+        // Start animation (Loop the animation)
+        viewer.clock.shouldAnimate = true;
+    </script>
+</body>
+</html>

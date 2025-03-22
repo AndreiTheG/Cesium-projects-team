@@ -1,0 +1,1336 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webpage Style</title>
+</head>
+<body>
+    <h1>Welcome</h1>
+    <p>Contents</p>
+
+    <script>
+        // Set background color
+        document.body.style.backgroundColor = 'lightbrown';
+
+        // Create a metallic blue effect for text
+        document.body.style.color = '#4682B4'; // Steel Blue for metallic-like effect
+        document.body.style.fontFamily = 'Arial, sans-serif';
+    </script>
+</body>
+</html>
+
+
+
+
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>CesiumJS 3D Globe</title>
+
+
+  <!-- CesiumJS CSS -->
+
+  <link href="https://cdn.jsdelivr.net/npm/cesium@1.97.1/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+
+
+  <!-- CesiumJS JavaScript -->
+
+  <script src="https://cdn.jsdelivr.net/npm/cesium@1.97.1/Build/Cesium/Cesium.js"></script>
+
+
+  <style>
+
+    /* Full screen style for Cesium container */
+
+    html, body, #cesiumContainer {
+
+      width: 100%;
+
+      height: 100%;
+
+      margin: 0;
+
+      padding: 0;
+
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <div id="cesiumContainer"></div>
+
+
+  <script>
+
+    // Initialize the Cesium Viewer
+
+    const viewer = new Cesium.Viewer('cesiumContainer', {
+
+      imageryProvider: Cesium.createWorldImagery(),
+
+      terrainProvider: Cesium.createWorldTerrain()
+
+    });
+
+
+    // Optional: You can zoom into a specific location, for example, New York City.
+
+    viewer.camera.flyTo({
+
+      destination: Cesium.Cartesian3.fromDegrees(-74.0, 40.7, 3000000)
+
+    });
+
+  </script>
+
+</body>
+
+</html>
+
+
+<!-- Load jQuery -->
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+
+
+<!-- Load Spectrum CSS -->
+
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/spectrum-colorpicker2@2.0.0/dist/spectrum.min.css" />
+
+
+<!-- Load Spectrum JS -->
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/spectrum-colorpicker2@2.0.0/dist/spectrum.min.js"></script>
+
+
+<script type="text/javascript">
+
+  $(document).ready(function() {
+
+    // Initialize Spectrum Color Picker
+
+    $("#colorpicker").spectrum({
+
+      color: "#f00", // Default color (red)
+
+      showInput: true, // Allow input in the field
+
+      showInitial: true, // Show initial color
+
+      preferredFormat: "hex", // The format you want for the color (hex, rgb, etc.)
+
+    });
+
+  });
+
+</script>
+
+
+<input type="text" id="colorpicker" />
+
+
+
+/* Global Body Style */
+
+body {
+
+  font-family: 'Arial', sans-serif;
+
+  margin: 0;
+
+  padding: 0;
+
+  background: linear-gradient(135deg, #1a1a1a, #0d0d0d);
+
+  color: #e6e6e6;
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  height: 100vh;
+
+}
+
+
+/* Glow effect for borders and text */
+
+@keyframes glow {
+
+  0% {
+
+    box-shadow: 0 0 5px #00d4ff, 0 0 10px #00d4ff, 0 0 15px #00d4ff, 0 0 20px #00d4ff;
+
+  }
+
+  50% {
+
+    box-shadow: 0 0 10px #00d4ff, 0 0 20px #00d4ff, 0 0 30px #00d4ff, 0 0 40px #00d4ff;
+
+  }
+
+  100% {
+
+    box-shadow: 0 0 5px #00d4ff, 0 0 10px #00d4ff, 0 0 15px #00d4ff, 0 0 20px #00d4ff;
+
+  }
+
+}
+
+
+/* Panel Styles */
+
+.panel {
+
+  background: rgba(25, 25, 25, 0.8);
+
+  border-radius: 15px;
+
+  padding: 20px;
+
+  width: 300px;
+
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+
+  animation: glow 1.5s infinite alternate;
+
+  margin: 10px;
+
+}
+
+
+/* Specific panel styles */
+
+#sensorPanel {
+
+  background: linear-gradient(135deg, #ff7a00, #ff1c1c);
+
+}
+
+
+#controlsPanel {
+
+  background: linear-gradient(135deg, #0099ff, #00ffcc);
+
+}
+
+
+#searchPanel {
+
+  background: linear-gradient(135deg, #8c00ff, #ff00cc);
+
+}
+
+
+/* Header style for panels */
+
+.panel h2 {
+
+  font-size: 20px;
+
+  text-align: center;
+
+  text-transform: uppercase;
+
+  margin-bottom: 10px;
+
+  color: #00d4ff;
+
+  letter-spacing: 1px;
+
+}
+
+
+/* Panel Content Styling */
+
+.panel .content {
+
+  font-size: 14px;
+
+  margin-bottom: 15px;
+
+}
+
+
+.panel button {
+
+  background: #00d4ff;
+
+  color: #000;
+
+  border: 2px solid #00d4ff;
+
+  padding: 10px 15px;
+
+  border-radius: 8px;
+
+  cursor: pointer;
+
+  transition: 0.3s ease;
+
+}
+
+
+.panel button:hover {
+
+  background: #000;
+
+  color: #00d4ff;
+
+  box-shadow: 0 0 15px #00d4ff;
+
+}
+
+
+/* Hover Effect on Panels */
+
+.panel:hover {
+
+  transform: scale(1.05);
+
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.8), 0 0 25px #00d4ff;
+
+}
+
+
+/* Layout Style for positioning the panels */
+
+.container {
+
+  display: flex;
+
+  flex-wrap: wrap;
+
+  justify-content: space-around;
+
+  gap: 20px;
+
+  padding: 20px;
+
+  max-width: 1200px;
+
+  width: 100%;
+
+}
+
+
+/* Responsive Design for smaller screens */
+
+@media (max-width: 768px) {
+
+  .container {
+
+    flex-direction: column;
+
+    align-items: center;
+
+  }
+
+
+  .panel {
+
+    width: 90%;
+
+    margin-bottom: 20px;
+
+  }
+
+}
+
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Under Development Overlay</title>
+
+  <style>
+
+    /* Style for the overlay */
+
+    #developmentOverlay {
+
+      position: fixed;
+
+      top: 0;
+
+      left: 0;
+
+      width: 100%;
+
+      height: 100%;
+
+      background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black */
+
+      color: white;
+
+      display: flex;
+
+      justify-content: center;
+
+      align-items: center;
+
+      font-size: 24px;
+
+      z-index: 9999; /* Makes sure the overlay is on top of other content */
+
+    }
+
+
+    /* Style for the message box inside the overlay */
+
+    .overlay-content {
+
+      text-align: center;
+
+      background-color: rgba(0, 0, 0, 0.9); /* Darker background for the message */
+
+      padding: 20px;
+
+      border-radius: 10px;
+
+      max-width: 80%;
+
+      margin: 0 auto;
+
+    }
+
+
+    /* Style for the close button */
+
+    #closeButton {
+
+      background-color: #ff4c4c;
+
+      color: white;
+
+      border: none;
+
+      padding: 10px 20px;
+
+      font-size: 18px;
+
+      cursor: pointer;
+
+      border-radius: 5px;
+
+      margin-top: 20px;
+
+    }
+
+
+    /* Hover effect for the button */
+
+    #closeButton:hover {
+
+      background-color: #ff1a1a;
+
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+
+  <!-- Development Overlay -->
+
+  <div id="developmentOverlay">
+
+    <div class="overlay-content">
+
+      <p>This application is still under development.</p>
+
+      <button id="closeButton" onclick="closeOverlay()">Close</button>
+
+    </div>
+
+  </div>
+
+
+  <script>
+
+    // Function to close the overlay
+
+    function closeOverlay() {
+
+      document.getElementById('developmentOverlay').style.display = 'none';
+
+    }
+
+  </script>
+
+
+</body>
+
+</html>
+
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>OPENQQUANTIFY</title>
+
+
+  <!-- CesiumJS CSS -->
+
+  <link href="https://cdn.jsdelivr.net/npm/cesium@1.97.1/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+
+
+  <!-- CesiumJS JavaScript -->
+
+  <script src="https://cdn.jsdelivr.net/npm/cesium@1.97.1/Build/Cesium/Cesium.js"></script>
+
+
+  <style>
+
+    /* Full screen style for Cesium container */
+
+    html, body, #cesiumContainer {
+
+      width: 100%;
+
+      height: 100%;
+
+      margin: 0;
+
+      padding: 0;
+
+      font-family: Arial, sans-serif;
+
+    }
+
+
+    /* Panel styles */
+
+    .panel-container {
+
+      position: absolute;
+
+      top: 20px;
+
+      left: 20px;
+
+      display: flex;
+
+      flex-direction: column;
+
+      gap: 20px;
+
+    }
+
+
+    .panel {
+
+      background-color: rgba(0, 0, 0, 0.7);
+
+      color: white;
+
+      padding: 10px;
+
+      border-radius: 10px;
+
+      width: 200px;
+
+    }
+
+
+    .logo-container {
+
+      font-size: 2em;
+
+      font-weight: bold;
+
+      text-align: center;
+
+    }
+
+
+    .sensor-panel, .controls-panel, .search-panel, .info-panel, .parameter-panel {
+
+      margin-bottom: 10px;
+
+    }
+
+
+    /* Control buttons */
+
+    .controls-panel button, .search-panel button {
+
+      width: 100%;
+
+      padding: 10px;
+
+      margin: 5px 0;
+
+      background-color: #333;
+
+      color: white;
+
+      border: none;
+
+      border-radius: 5px;
+
+      cursor: pointer;
+
+      transition: background-color 0.3s;
+
+    }
+
+
+    .controls-panel button:hover, .search-panel button:hover {
+
+      background-color: #666;
+
+    }
+
+
+    .parameter-panel input[type="range"] {
+
+      width: 100%;
+
+      margin: 5px 0;
+
+    }
+
+
+    .parameter-panel input[type="color"] {
+
+      width: 100%;
+
+      padding: 5px;
+
+      margin-top: 10px;
+
+    }
+
+
+  </style>
+
+</head>
+
+<body>
+
+  <!-- Cesium Viewer -->
+
+  <div id="cesiumContainer"></div>
+
+
+  <!-- Panels -->
+
+  <div class="panel-container">
+
+    <!-- Logo/Title Panel -->
+
+    <div class="panel logo-container">OPENQQUANTIFY</div>
+
+
+    <!-- Sensor Panel -->
+
+    <div class="panel sensor-panel">
+
+      <h3>Sensors</h3>
+
+      <div id="sensorList">
+
+        <div id="ultrasonicSensor" class="sensor-item" draggable="true">Ultrasonic</div>
+
+      </div>
+
+    </div>
+
+
+    <!-- Controls Panel -->
+
+    <div class="panel controls-panel">
+
+      <button id="playBtn">Play</button>
+
+      <button id="pauseBtn">Pause</button>
+
+      <button id="resetBtn">Reset</button>
+
+      <button id="clearBtn">Clear</button>
+
+    </div>
+
+
+    <!-- Search Panel -->
+
+    <div class="panel search-panel">
+
+      <input type="text" id="latInput" placeholder="Latitude" />
+
+      <input type="text" id="lonInput" placeholder="Longitude" />
+
+      <button id="flyBtn">Fly to Location</button>
+
+    </div>
+
+
+    <!-- Sensor Information Panel -->
+
+    <div class="panel info-panel" id="infoPanel">
+
+      <h3>Sensor Info</h3>
+
+      <p id="sensorInfo">Select a sensor</p>
+
+    </div>
+
+
+    <!-- Parameter Tuning Panel -->
+
+    <div class="panel parameter-panel">
+
+      <h3>Parameter Tuning</h3>
+
+      <label for="rangeSlider">Range</label>
+
+      <input type="range" id="rangeSlider" min="0" max="1000" value="500">
+
+      <label for="fovSlider">Field of View</label>
+
+      <input type="range" id="fovSlider" min="0" max="180" value="60">
+
+      <label for="colorPicker">Sensor Color</label>
+
+      <input type="color" id="colorPicker" value="#ff0000">
+
+    </div>
+
+  </div>
+
+
+  <script>
+
+    // Initialize Cesium Viewer
+
+    const viewer = new Cesium.Viewer('cesiumContainer', {
+
+      imageryProvider: Cesium.createWorldImagery(),
+
+      terrainProvider: Cesium.createWorldTerrain()
+
+    });
+
+
+    // Camera control (Fly to specific location)
+
+    document.getElementById('flyBtn').addEventListener('click', function() {
+
+      const lat = parseFloat(document.getElementById('latInput').value);
+
+      const lon = parseFloat(document.getElementById('lonInput').value);
+
+      if (!isNaN(lat) && !isNaN(lon)) {
+
+        viewer.camera.flyTo({
+
+          destination: Cesium.Cartesian3.fromDegrees(lon, lat, 3000000)
+
+        });
+
+      }
+
+    });
+
+
+    // Sensor Dragging Logic
+
+    const sensorList = document.getElementById('sensorList');
+
+    const ultrasonicSensor = document.getElementById('ultrasonicSensor');
+
+    ultrasonicSensor.addEventListener('dragstart', function(e) {
+
+      e.dataTransfer.setData('sensor', 'ultrasonic');
+
+    });
+
+
+    // Adding sensor to globe on drop (for simplicity, just placing it on the surface)
+
+    viewer.scene.canvas.addEventListener('drop', function(e) {
+
+      e.preventDefault();
+
+      const sensorType = e.dataTransfer.getData('sensor');
+
+      if (sensorType === 'ultrasonic') {
+
+        const ray = viewer.camera.getPickRay(new Cesium.Cartesian2(e.clientX, e.clientY));
+
+        const intersection = viewer.scene.globe.pick(ray, viewer.scene);
+
+        if (Cesium.defined(intersection)) {
+
+          const entity = viewer.entities.add({
+
+            position: intersection,
+
+            model: {
+
+              uri: 'https://yourmodelurl.com/ultrasonic_model.glb',  // Example model URL
+
+              minimumPixelSize: 64
+
+            }
+
+          });
+
+        }
+
+      }
+
+    });
+
+
+    // Sensor Info Panel
+
+    ultrasonicSensor.addEventListener('click', function() {
+
+      document.getElementById('sensorInfo').textContent = "Selected: Ultrasonic Sensor";
+
+    });
+
+
+    // Control Buttons (Play, Pause, Reset, Clear)
+
+    document.getElementById('playBtn').addEventListener('click', function() {
+
+      console.log("Play simulation");
+
+    });
+
+
+    document.getElementById('pauseBtn').addEventListener('click', function() {
+
+      console.log("Pause simulation");
+
+    });
+
+
+    document.getElementById('resetBtn').addEventListener('click', function() {
+
+      viewer.camera.setView({
+
+        destination: Cesium.Cartesian3.fromDegrees(0.0, 0.0, 3000000)
+
+      });
+
+    });
+
+
+    document.getElementById('clearBtn').addEventListener('click', function() {
+
+      viewer.entities.removeAll();
+
+    });
+
+
+    // Parameter Tuning (Sliders and Color Picker)
+
+    document.getElementById('rangeSlider').addEventListener('input', function() {
+
+      const rangeValue = this.value;
+
+      console.log("Sensor Range: " + rangeValue);
+
+    });
+
+
+    document.getElementById('fovSlider').addEventListener('input', function() {
+
+      const fovValue = this.value;
+
+      console.log("Field of View: " + fovValue);
+
+    });
+
+
+    document.getElementById('colorPicker').addEventListener('input', function() {
+
+      const color = this.value;
+
+      console.log("Sensor Color: " + color);
+
+    });
+
+  </script>
+
+</body>
+
+</html>
+
+
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Cesium 3D Map</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cesium/1.104.0/Cesium/Widgets/widgets.css">
+
+  <style>
+
+    /* Set the container size for Cesium */
+
+    #cesiumContainer {
+
+      width: 100%;
+
+      height: 100vh; /* Full height of the browser window */
+
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+
+  <!-- Cesium Viewer Container -->
+
+  <div id="cesiumContainer"></div>
+
+
+  <!-- Load Cesium JS -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cesium/1.104.0/Cesium/Cesium.js"></script>
+
+ 
+
+  <script>
+
+    // Function to initialize the Cesium Viewer with key features
+
+    function initializeCesium() {
+
+      // Create the Cesium Viewer inside the specified container
+
+      const viewer = new Cesium.Viewer('cesiumContainer', {
+
+        imageryProviderViewModel: Cesium.createOpenStreetMapImageryProviderViewModel(), // OpenStreetMap Imagery
+
+        terrainProviderViewModel: Cesium.createWorldTerrainViewModel(), // World Terrain
+
+        sceneMode: Cesium.SceneMode.SCENE3D, // 3D Mode
+
+        selectionIndicator: false, // Disable selection indicator for clean UI
+
+        timeline: false, // Disable timeline for simplicity
+
+        navigationHelpButton: false, // Hide navigation help button
+
+        homeButton: false, // Hide home button
+
+        fullscreenButton: false, // Hide fullscreen button
+
+        geocoder: false, // Hide geocoder (search bar)
+
+      });
+
+
+      // Enable World Terrain for realistic topography
+
+      viewer.terrainProvider = Cesium.createWorldTerrain();
+
+
+      // Enable 3D Buildings (OSM Buildings)
+
+      viewer.scene.primitives.add(Cesium.createOsmBuildings());
+
+
+      // Enable shadows, lighting, fog, and atmospheric effects
+
+      viewer.scene.globe.enableLighting = true; // Enables realistic lighting
+
+      viewer.scene.globe.shadows = Cesium.ShadowMode.ENABLED; // Enable shadows
+
+      viewer.scene.skyAtmosphere = new Cesium.SkyAtmosphere(); // Enable sky atmosphere for better sky effects
+      viewer.scene.fog.enabled = true; // Enable fog for more realistic weather effects
+      // Set the viewer's default camera to a starting position
+      viewer.camera.setView({
+
+        destination: Cesium.Cartesian3.fromDegrees(-75.59777, 40.03883, 10000), // Longitude, Latitude, Height (in meters)
+
+        orientation: {
+
+       
+// Assuming Cesium Viewer is already initialized
+const viewer = new Cesium.Viewer("cesiumContainer");
+
+// Simulation Controls
+function toggleAnimation() {
+  viewer.clock.shouldAnimate = !viewer.clock.shouldAnimate;
+}
+
+function resetClock() {
+  viewer.clock.currentTime = viewer.clock.startTime.clone();
+  viewer.clock.shouldAnimate = false;
+}
+
+function clearSensors() {
+  viewer.entities.removeAll();
+}
+
+// Add buttons for simulation controls
+document.getElementById("playPause").addEventListener("click", toggleAnimation);
+document.getElementById("reset").addEventListener("click", resetClock);
+document.getElementById("clearSensors").addEventListener("click", clearSensors);
+
+// Search Functionality
+function flyToLocation() {
+  const lat = parseFloat(document.getElementById("latitude").value);
+  const lon = parseFloat(document.getElementById("longitude").value);
+
+  if (isNaN(lat) || isNaN(lon) || lat < -90 || lat > 90 || lon < -180 || lon > 180) {
+    alert("Invalid latitude or longitude. Please enter valid numeric values within bounds.");
+    return;
+  }
+
+  viewer.camera.flyTo({
+    destination: Cesium.Cartesian3.fromDegrees(lon, lat, 1000), // Adjust height as needed
+    duration: 2, // Smooth transition duration
+  });
+}
+
+document.getElementById("search").addEventListener("click", flyToLocation);
+
+// Draggable Entities
+let selectedEntity = null;
+const handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
+
+handler.setInputAction((click) => {
+  const pickedObject = viewer.scene.pick(click.position);
+  if (Cesium.defined(pickedObject) && pickedObject.id) {
+    selectedEntity = pickedObject.id;
+    selectedEntity.billboard.scale = 1.5; // Highlight the selected entity (if it's a sensor/rocket)
+  }
+}, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+
+handler.setInputAction((movement) => {
+  if (selectedEntity) {
+    const cartesian = viewer.camera.pickEllipsoid(movement.endPosition, viewer.scene.globe.ellipsoid);
+    if (cartesian) {
+      const cartographic = Cesium.Cartographic.fromCartesian(cartesian);
+      const latitude = Cesium.Math.toDegrees(cartographic.latitude);
+      const longitude = Cesium.Math.toDegrees(cartographic.longitude);
+      selectedEntity.position = Cesium.Cartesian3.fromDegrees(longitude, latitude);
+    }
+  }
+}, Cesium.ScreenSpaceEventType.MOUSE_MOVE);
+
+handler.setInputAction(() => {
+  if (selectedEntity) {
+    selectedEntity.billboard.scale = 1.0; // Reset entity size on release
+    selectedEntity = null;
+  }
+}, Cesium.ScreenSpaceEventType.LEFT_UP);
+
+// Tooltip for dragging
+const tooltip = document.createElement("div");
+tooltip.style.position = "absolute";
+tooltip.style.background = "rgba(42, 42, 42, 0.8)";
+tooltip.style.color = "white";
+tooltip.style.padding = "5px";
+tooltip.style.borderRadius = "3px";
+tooltip.style.display = "none";
+tooltip.innerText = "Drag to Move Sensor";
+document.body.appendChild(tooltip);
+
+handler.setInputAction((movement) => {
+  if (selectedEntity) {
+    tooltip.style.left = `${movement.endPosition.x + 10}px`;
+    tooltip.style.top = `${movement.endPosition.y + 10}px`;
+    tooltip.style.display = "block";
+  } else {
+    tooltip.style.display = "none";
+  }
+}, Cesium.ScreenSpaceEventType.MOUSE_MOVE);
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cesium Simulation</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <div class="controls">
+      <h1>Simulation Controls</h1>
+      <button id="playPause">Play/Pause</button>
+      <button id="reset">Reset</button>
+      <button id="clearSensors">Clear Sensors</button>
+    </div>
+    <div class="search">
+      <h2>Search Location</h2>
+      <label for="latitude">Latitude:</label>
+      <input id="latitude" type="text" placeholder="Enter Latitude">
+      <label for="longitude">Longitude:</label>
+      <input id="longitude" type="text" placeholder="Enter Longitude">
+      <button id="search">Search</button>
+    </div>
+    <div id="cesiumContainer"></div>
+  </div>
+  <script src="https://cesium.com/downloads/cesiumjs/releases/latest/Build/Cesium/Cesium.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
+
+/* General Layout */
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Arial', sans-serif;
+  background: linear-gradient(135deg, #0d0d0d, #4d3d3d); /* Black to brown gradient */
+  color: #fff;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.controls, .search {
+  background: rgba(0, 0, 0, 0.8);
+  border: 2px solid #4d3d3d;
+  padding: 20px;
+  margin: 10px 0;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.7);
+  text-align: center;
+}
+
+h1, h2 {
+  margin: 0 0 15px;
+  color: #ffcc66;
+  text-shadow: 2px 2px 5px #000;
+}
+
+label {
+  display: block;
+  margin: 10px 0 5px;
+  font-size: 1.1em;
+}
+
+input {
+  width: 80%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #4d3d3d;
+  border-radius: 5px;
+  background: #1a1a1a;
+  color: #fff;
+}
+
+button {
+  background: #4d3d3d;
+  color: #fff;
+  border: 1px solid #ffcc66;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+  background: #ffcc66;
+  color: #000;
+  transform: scale(1.1);
+}
+
+/* Cesium Container */
+#cesiumContainer {
+  flex-grow: 1;
+  width: 100%;
+  border: 2px solid #4d3d3d;
+  border-radius: 10px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.7);
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cesium Interactive Map</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cesium.com/downloads/cesiumjs/releases/latest/Build/Cesium/Cesium.js"></script>
+</head>
+<body>
+  <div id="cesiumContainer"></div>
+  <div class="interactive-buttons">
+    <button id="button1" class="random-button">Button 1</button>
+    <button id="button2" class="random-button">Button 2</button>
+    <button id="button3" class="random-button">Button 3</button>
+    <button id="button4" class="random-button">Button 4</button>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
+
+/* General Styles */
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* CesiumJS Globe Background */
+#cesiumContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+/* Buttons Container */
+.interactive-buttons {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none; /* Prevent blocking the map */
+}
+
+/* Random Buttons */
+.random-button {
+  position: absolute;
+  padding: 10px 20px;
+  background: rgba(255, 204, 102, 0.8);
+  border: 2px solid #4d3d3d;
+  border-radius: 8px;
+  color: black;
+  font-size: 1.1em;
+  cursor: pointer;
+  pointer-events: auto; /* Allow interaction */
+  transition: transform 0.2s ease, background 0.3s ease;
+}
+
+.random-button:hover {
+  transform: scale(1.1);
+  background: #ffcc66;
+}
+// Initialize Cesium Viewer
+const viewer = new Cesium.Viewer("cesiumContainer", {
+  terrainProvider: Cesium.createWorldTerrain(),
+  baseLayerPicker: false,
+  geocoder: false,
+});
+
+// Buttons and Interaction
+const buttons = document.querySelectorAll(".random-button");
+const buttonActions = [
+  () => viewer.camera.flyTo({
+    destination: Cesium.Cartesian3.fromDegrees(-74.006, 40.7128, 1000), // New York City
+    duration: 2,
+  }),
+  () => viewer.camera.flyTo({
+    destination: Cesium.Cartesian3.fromDegrees(139.6917, 35.6895, 1000), // Tokyo
+    duration: 2,
+  }),
+  () => viewer.camera.flyTo({
+    destination: Cesium.Cartesian3.fromDegrees(2.3522, 48.8566, 1000), // Paris
+    duration: 2,
+  }),
+  () => viewer.camera.flyTo({
+    destination: Cesium.Cartesian3.fromDegrees(151.2093, -33.8688, 1000), // Sydney
+    duration: 2,
+  }),
+];
+
+// Randomize Button Positions
+function randomizeButtonPositions() {
+  buttons.forEach((button, index) => {
+    const randomX = Math.random() * (window.innerWidth - 100); // Prevent overflow
+    const randomY = Math.random() * (window.innerHeight - 50); // Prevent overflow
+    button.style.left = `${randomX}px`;
+    button.style.top = `${randomY}px`;
+
+    // Attach button action
+    button.addEventListener("click", buttonActions[index]);
+  });
+}
+
+// Call randomization function
+randomizeButtonPositions();
+
+// Resize handler to re-randomize buttons on window resize
+window.addEventListener("resize", randomizeButtonPositions);
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webpage Style</title>
+</head>
+<body>
+    <h1>Contact</h1>
+    <p>This is a sample webpage with custom colors.</p>
+
+    <script>
+        // Set background color
+        document.body.style.backgroundColor = 'lightbrown';
+
+        // Create a metallic blue effect for text
+        document.body.style.color = '#4682B4'; // Steel Blue for metallic-like effect
+        document.body.style.fontFamily = 'Arial, sans-serif';
+    </script>
+</body>
+</html>
+

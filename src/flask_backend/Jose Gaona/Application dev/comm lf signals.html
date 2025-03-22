@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<title></title>
+	<meta name="generator" content="LibreOffice 24.2.7.2 (Linux)"/>
+	<meta name="created" content="2025-01-28T10:15:51.335335443"/>
+	<meta name="changed" content="2025-01-28T10:17:02.978477750"/>
+	<style type="text/css">
+		@page { size: 8.27in 11.69in; margin: 0.79in }
+		p { line-height: 115%; margin-bottom: 0.1in; background: transparent }
+	</style>
+</head>
+<body lang="en-US" link="#000080" vlink="#800000" dir="ltr"><p style="line-height: 100%; margin-bottom: 0in">
+&lt;!DOCTYPE html&gt;</p>
+<p style="line-height: 100%; margin-bottom: 0in">&lt;html lang=&quot;en&quot;&gt;</p>
+<p style="line-height: 100%; margin-bottom: 0in">&lt;head&gt;</p>
+<p style="line-height: 100%; margin-bottom: 0in">    &lt;meta
+charset=&quot;UTF-8&quot;&gt;</p>
+<p style="line-height: 100%; margin-bottom: 0in">    &lt;meta
+name=&quot;viewport&quot; content=&quot;width=device-width,
+initial-scale=1.0&quot;&gt;</p>
+<p style="line-height: 100%; margin-bottom: 0in">    &lt;title&gt;3D
+Antenna with Sensor Data&lt;/title&gt;</p>
+<p style="line-height: 100%; margin-bottom: 0in">    &lt;script
+src=&quot;https://unpkg.com/cesium@1.96.0/Build/Cesium/cesium.js&quot;&gt;&lt;/script&gt;</p>
+<p style="line-height: 100%; margin-bottom: 0in">    &lt;link
+href=&quot;https://unpkg.com/cesium@1.96.0/Build/Cesium/Widgets/widgets.css&quot;
+rel=&quot;stylesheet&quot; /&gt;</p>
+<p style="line-height: 100%; margin-bottom: 0in">    &lt;style&gt;</p>
+<p style="line-height: 100%; margin-bottom: 0in">       
+#cesiumContainer {</p>
+<p style="line-height: 100%; margin-bottom: 0in">            width:
+100%;</p>
+<p style="line-height: 100%; margin-bottom: 0in">            height:
+100vh;</p>
+<p style="line-height: 100%; margin-bottom: 0in">        }</p>
+<p style="line-height: 100%; margin-bottom: 0in">    &lt;/style&gt;</p>
+<p style="line-height: 100%; margin-bottom: 0in">&lt;/head&gt;</p>
+<p style="line-height: 100%; margin-bottom: 0in">&lt;body&gt;</p>
+<p style="line-height: 100%; margin-bottom: 0in">    &lt;div
+id=&quot;cesiumContainer&quot;&gt;&lt;/div&gt;</p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in">    &lt;script&gt;</p>
+<p style="line-height: 100%; margin-bottom: 0in">        const viewer
+= new Cesium.Viewer('cesiumContainer', {</p>
+<p style="line-height: 100%; margin-bottom: 0in">           
+imageryProviderViewModels:
+Cesium.createDefaultImageryProviderViewModels(),</p>
+<p style="line-height: 100%; margin-bottom: 0in">           
+terrainProviderViewModels:
+Cesium.createDefaultTerrainProviderViewModels(),</p>
+<p style="line-height: 100%; margin-bottom: 0in">           
+shouldAnimate: true</p>
+<p style="line-height: 100%; margin-bottom: 0in">        });</p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in">        // Create a
+3D model representing an antenna.</p>
+<p style="line-height: 100%; margin-bottom: 0in">        const
+antennaEntity = viewer.entities.add({</p>
+<p style="line-height: 100%; margin-bottom: 0in">            name:
+'Antenna',</p>
+<p style="line-height: 100%; margin-bottom: 0in">           
+position: Cesium.Cartesian3.fromDegrees(-75.59777, 40.03883, 100), //
+Example position (longitude, latitude, altitude)</p>
+<p style="line-height: 100%; margin-bottom: 0in">            model: {</p>
+<p style="line-height: 100%; margin-bottom: 0in">                uri:
+'path/to/antenna_model.gltf',  // Replace with the path to a 3D model
+of the antenna</p>
+<p style="line-height: 100%; margin-bottom: 0in">               
+minimumPixelSize: 128,</p>
+<p style="line-height: 100%; margin-bottom: 0in">               
+maximumScale: 20000</p>
+<p style="line-height: 100%; margin-bottom: 0in">            }</p>
+<p style="line-height: 100%; margin-bottom: 0in">        });</p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in">        // Define
+three sensors' locations (just dummy locations for the sake of this
+example)</p>
+<p style="line-height: 100%; margin-bottom: 0in">        const
+sensorPositions = [</p>
+<p style="line-height: 100%; margin-bottom: 0in">            { name:
+'Sensor 1', position: Cesium.Cartesian3.fromDegrees(-75.59700,
+40.03900, 120) },</p>
+<p style="line-height: 100%; margin-bottom: 0in">            { name:
+'Sensor 2', position: Cesium.Cartesian3.fromDegrees(-75.59800,
+40.03750, 110) },</p>
+<p style="line-height: 100%; margin-bottom: 0in">            { name:
+'Sensor 3', position: Cesium.Cartesian3.fromDegrees(-75.59650,
+40.04000, 130) }</p>
+<p style="line-height: 100%; margin-bottom: 0in">        ];</p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in">        // Add the
+sensors to the viewer as 3D points</p>
+<p style="line-height: 100%; margin-bottom: 0in">       
+sensorPositions.forEach(sensor =&gt; {</p>
+<p style="line-height: 100%; margin-bottom: 0in">           
+viewer.entities.add({</p>
+<p style="line-height: 100%; margin-bottom: 0in">               
+name: sensor.name,</p>
+<p style="line-height: 100%; margin-bottom: 0in">               
+position: sensor.position,</p>
+<p style="line-height: 100%; margin-bottom: 0in">               
+point: {</p>
+<p style="line-height: 100%; margin-bottom: 0in">                   
+pixelSize: 10,</p>
+<p style="line-height: 100%; margin-bottom: 0in">                   
+color: Cesium.Color.RED,</p>
+<p style="line-height: 100%; margin-bottom: 0in">                   
+outlineColor: Cesium.Color.BLACK,</p>
+<p style="line-height: 100%; margin-bottom: 0in">                   
+outlineWidth: 2</p>
+<p style="line-height: 100%; margin-bottom: 0in">                }</p>
+<p style="line-height: 100%; margin-bottom: 0in">            });</p>
+<p style="line-height: 100%; margin-bottom: 0in">        });</p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in">        // Function
+to simulate low-frequency signal data communication</p>
+<p style="line-height: 100%; margin-bottom: 0in">        function
+fetchSensorData() {</p>
+<p style="line-height: 100%; margin-bottom: 0in">            //
+Simulate fetching data from a server (mocked data for now)</p>
+<p style="line-height: 100%; margin-bottom: 0in">            const
+sensorData = [</p>
+<p style="line-height: 100%; margin-bottom: 0in">                {
+sensor: 'Sensor 1', frequency: 0.5, signalStrength: 75 },</p>
+<p style="line-height: 100%; margin-bottom: 0in">                {
+sensor: 'Sensor 2', frequency: 0.6, signalStrength: 80 },</p>
+<p style="line-height: 100%; margin-bottom: 0in">                {
+sensor: 'Sensor 3', frequency: 0.45, signalStrength: 70 }</p>
+<p style="line-height: 100%; margin-bottom: 0in">            ];</p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in">            //
+Display the received sensor data</p>
+<p style="line-height: 100%; margin-bottom: 0in">           
+console.log('Received sensor data:', sensorData);</p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in">            //
+Update the antenna's position based on the signal strength (for
+example)</p>
+<p style="line-height: 100%; margin-bottom: 0in">            const
+averageSignalStrength = sensorData.reduce((sum, data) =&gt; sum +
+data.signalStrength, 0) / sensorData.length;</p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in">           
+antennaEntity.position = Cesium.Cartesian3.fromDegrees(</p>
+<p style="line-height: 100%; margin-bottom: 0in">               
+-75.59777,  // Keep the same longitude</p>
+<p style="line-height: 100%; margin-bottom: 0in">               
+40.03883,   // Keep the same latitude</p>
+<p style="line-height: 100%; margin-bottom: 0in">                100
++ (averageSignalStrength / 10) // Adjust height based on signal
+strength</p>
+<p style="line-height: 100%; margin-bottom: 0in">            );</p>
+<p style="line-height: 100%; margin-bottom: 0in">        }</p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in">        // Simulate
+periodic data fetching (e.g., every 5 seconds)</p>
+<p style="line-height: 100%; margin-bottom: 0in">       
+setInterval(fetchSensorData, 5000);</p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in">        // Camera
+view setup to focus on the antenna</p>
+<p style="line-height: 100%; margin-bottom: 0in">       
+viewer.camera.lookAt(Cesium.Cartesian3.fromDegrees(-75.59777,
+40.03883), new Cesium.Cartesian3(0, 0, 1000));</p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in">    &lt;/script&gt;</p>
+<p style="line-height: 100%; margin-bottom: 0in">&lt;/body&gt;</p>
+<p style="line-height: 100%; margin-bottom: 0in">&lt;/html&gt;</p>
+</body>
+</html>
