@@ -5,7 +5,7 @@ The demos/ folder contains video explanations and 3D object files related to Ces
 
 
 # **Folder Structure**
-
+ ```
 📂 demos/
 ├── 📂 application_videos/ → Contains video explanations of team members' Cesium projects.
 │ ├── 📂 Ahmed Adel/ → Video(s) showcasing Ahmed Adel’s project.
@@ -37,6 +37,8 @@ The demos/ folder contains video explanations and 3D object files related to Ces
 │
 ├── README.md → Documentation for this directory.
 
+ ```
+ 
 # **How to Use These Files?**
 
 # **Application Videos:**
