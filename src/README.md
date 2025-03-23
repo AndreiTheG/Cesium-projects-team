@@ -1,6 +1,6 @@
-# **Cesium Project – Source Code (src/)**
+# Cesium Project – Source Code (src/)
 
-# **Overview**
+# Overview
 The src/ folder contains the core functionalities of the Cesium project, each implemented by different team members. These functionalities include:
 - Drag and Drop Entities – Allows users to move objects dynamically.
 - Rotation Controls – Enables smooth rotation of entities within the environment.
@@ -11,7 +11,7 @@ The src/ folder contains the core functionalities of the Cesium project, each im
 - IoT Interaction – Manages IoT device communication within the simulation.
 - Simulation Controls – Offers controls for running and managing simulations.
 
-# **Next Steps**
+# Next Steps
 To improve maintainability and consistency, the following steps should be taken:
 - Review Existing Code – Identify common components and redundant implementations.
 - Plan Modular Integration – Define a strategy for merging different implementations into a cohesive, modularized application.
