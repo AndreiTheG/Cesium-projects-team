@@ -7,7 +7,7 @@ The Cesium Team Project brings together cutting-edge technology to visualize 3D 
 
 Watch as users interact with the map by adding and manipulating 3D models in real time! This demo shows the seamless placement of objects, enabling real-time visualization and interaction.
 
-![Object Placement Demo](https://d2t1xqejof9utc.cloudfront.net/screenshots/pics/9ad713c5f7bbb918e1ea9839f44ab216/large.gif)
+![Object Placement Demo](demos/screenshots/large.gif)
 
 This is just a glimpse of how objects like buildings, cars, or sensors can be integrated into your 3D world.
 
