@@ -66,9 +66,9 @@ Each video showcases **multiple functionalities** implemented by a team member.
 
  ### Ahmed Adel's Demo
 ![Freq](screenshots/Ahmed%20Adel/Signals/Signals/ScreenShots/Freq.png)
-[![Signal](screenshots/Ahmed%20Adel/Signals/Signals/ScreenShots/simulated%20underwater%20acoustic%20signal.png)]
-[![Waterfall](screenshots/Ahmed%20Adel/Signals/Signals/ScreenShots/waterfall.png)]  
-[![Ahmed's Video](application_videos/Ahmed%20Adel/Cesium/Cesuim%20Vid.mp4)]
+![Signal](screenshots/Ahmed%20Adel/Signals/Signals/ScreenShots/simulated%20underwater%20acoustic%20signal.png)
+![Waterfall](screenshots/Ahmed%20Adel/Signals/Signals/ScreenShots/waterfall.png)  
+![Ahmed's Video](application_videos/Ahmed%20Adel/Cesium/Cesuim%20Vid.mp4)
  
  
 📌 **Features Covered:**  
