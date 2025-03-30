@@ -4,6 +4,8 @@ The demos/ folder contains video explanations and 3D object files related to Ces
 
 # Folder Structure
 
+```
+
 📂 demos/
 ├── 📂 application_videos/ → Contains video explanations of team members' Cesium projects.
 │ ├── 📂 Ahmed Adel/ → Video(s) showcasing Ahmed Adel’s project.
@@ -41,6 +43,7 @@ The demos/ folder contains video explanations and 3D object files related to Ces
 │
 ├── README.md → Documentation for this directory.
 
+```
 
 # How to Use These Files?
 
@@ -68,7 +71,7 @@ Each video showcases **multiple functionalities** implemented by a team member.
 [![Freq](screenshots/Ahmed%20Adel/Signals/Signals/ScreenShots/Freq.png)] 
 [![Signal](screenshots/Ahmed%20Adel/Signals/Signals/ScreenShots/simulated%20underwater%20acoustic%20signal.png)]
 [![Waterfall](screenshots/Ahmed%20Adel/Signals/Signals/ScreenShots/waterfall.png)]  
-[![Ahmed's Video]((application_videos/Ahmed%20Adel/Cesium/Cesuim%20Vid.mp4) )]
+[![Ahmed's Video](application_videos/Ahmed%20Adel/Cesium/Cesuim%20Vid.mp4)]
  
  
 📌 **Features Covered:**  

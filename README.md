@@ -6,6 +6,7 @@ This repository contains our team's contributions to the **Cesium Team Project**
 # Repository Structure
 
 ```
+
 📂 cesium-project  
  ├── 📂 demos  
  │   ├── 📂 obj_files              # 3D models, assets, and related files  
@@ -33,6 +34,7 @@ This repository contains our team's contributions to the **Cesium Team Project**
  │  
  ├── LICENSE                        # Open-source license (Apache 2.0)  
  ├── README.md                      # Project Overview  
+ 
  ```
 
 # Folder Breakdown
