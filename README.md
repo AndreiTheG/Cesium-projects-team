@@ -1,5 +1,12 @@
 # Cesium Team Project Repository  
 
+![OpenQQuantify Banner](https://www.openqquantify.com/static/logo.png)
+
+![GitHub stars](https://img.shields.io/github/stars/openqquantify/cesium-projects-team?style=social)
+![License](https://img.shields.io/github/license/openqquantify/cesium-projects-team)
+![Build Status](https://img.shields.io/github/workflow/status/openqquantify/cesium-projects-team/build)
+![Test Coverage](https://img.shields.io/codecov/c/github/openqquantify/cesium-projects-team)
+
 # Intro
 The Cesium Team Project brings together cutting-edge technology to visualize 3D models, simulate sensors, and process real-time data. By leveraging Cesium's 3D mapping capabilities, we create dynamic, interactive applications for a range of industries, from IoT integration to advanced sensor simulations. Join us in revolutionizing how we interact with and understand spatial data!
 
@@ -10,14 +17,6 @@ Watch as users interact with the map by adding and manipulating 3D models in rea
 ![Object Placement Demo](demos/screenshots/large.gif)
 
 This is just a glimpse of how objects like buildings, cars, or sensors can be integrated into your 3D world.
-
-
-![OpenQQuantify Banner](https://www.openqquantify.com/static/logo.png)
-
-![GitHub stars](https://img.shields.io/github/stars/openqquantify/cesium-projects-team?style=social)
-![License](https://img.shields.io/github/license/openqquantify/cesium-projects-team)
-![Build Status](https://img.shields.io/github/workflow/status/openqquantify/cesium-projects-team/build)
-![Test Coverage](https://img.shields.io/codecov/c/github/openqquantify/cesium-projects-team)
 
 ## Overview
 This repository contains our team's contributions to the **Cesium Team Project**, including application demonstrations, object files, videos, and source code. The project aims to merge and organize all work into a structured repository for better collaboration, version control, and open-source sharing.  
