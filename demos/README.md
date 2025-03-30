@@ -80,22 +80,22 @@ Each video showcases **multiple functionalities** implemented by a team member.
 - **GNU Radio signal graph**
 
 ### Andrei Gheorghe's Demo
-[![Cesium project Screenshot 1](screenshots/Andrei%20Gheorghe/Cesium%20project%20browser%20screenshot/Screenshot%20(1189).png)] 
-[![Cesium project Screenshot 2](screenshots/Andrei%20Gheorghe/Cesium%20project%20browser%20screenshot/Screenshot%20(1190).png)] 
-[![Cesium project Screenshot 3](screenshots/Andrei%20Gheorghe/Cesium%20project%20browser%20screenshot/Screenshot%20(1191).png)] 
-[![RF Output 5G Network Screenshot 1](screenshots/Andrei%20Gheorghe/RF%20output%205G%20Network%20result/Screenshot%20(1196).png)]
-[![RF Output 5G Network Screenshot 2](screenshots/Andrei%20Gheorghe/RF%20output%205G%20Network%20result/Screenshot%20(1197).png)]
-[![RF Output Satellite Broadcast Scrennshot](screenshots/Andrei%20Gheorghe/RF%20Output%20Satellite%20Broadcast%20result/Screenshot%20(1198).png)]
-[![RF Output Wifi result Screenshot 1](screenshots/Andrei%20Gheorghe/RF%20output%20WiFi%20result/Screenshot%20(1192).png)]
-[![RF Output Wifi result Screenshot 2](screenshots/Andrei%20Gheorghe/RF%20output%20WiFi%20result/Screenshot%20(1193).png)]
-[![5G Network Signal Script Presentation](application_videos/Andrei%20Gheorghe/5G%20Network%20Signal%20Script%20Presentation.mp4)]
-[![Cesium project presentation part 1](application_videos/Andrei%20Gheorghe/cesium-project-presentation-part-1_bz5jbCpu.mp4)]
-[![Cesium project presentation part 2](application_videos/Andrei%20Gheorghe/Cesium%20Project%20Presentation%20-%20part%202.mp4)]
-[![Cesium project presentation part 3](application_videos/Andrei%20Gheorghe/Cesium%20Project%20Presentation%20-%20part%203.mp4)]
-[![Cesium project presentation part 4](application_videos/Andrei%20Gheorghe/Cesium%20Project%20Presentation%20-%20part%204.mp4)]
-[![Satellite Broadcast Signal Script Presentation](application_videos/Andrei%20Gheorghe/Satellite%20Broadcast%20Signal%20Script%20Presentation.mp4)]
-[![Wi-Fi Signal Script Video Part 1](application_videos/Andrei%20Gheorghe/Wi-Fi%20Signal%20Script%20Presentation.mp4)]
-[![Wi-Fi Signal Script Video Part 2](application_videos/Andrei%20Gheorghe/Wi-Fi%20Signal%20Script%20Presentation%20-%20part%202.mp4)]
+![Cesium project Screenshot 1](screenshots/Andrei%20Gheorghe/Cesium%20project%20browser%20screenshot/Screenshot%20(1189).png)
+![Cesium project Screenshot 2](screenshots/Andrei%20Gheorghe/Cesium%20project%20browser%20screenshot/Screenshot%20(1190).png) 
+![Cesium project Screenshot 3](screenshots/Andrei%20Gheorghe/Cesium%20project%20browser%20screenshot/Screenshot%20(1191).png)
+![RF Output 5G Network Screenshot 1](screenshots/Andrei%20Gheorghe/RF%20output%205G%20Network%20result/Screenshot%20(1196).png)
+![RF Output 5G Network Screenshot 2](screenshots/Andrei%20Gheorghe/RF%20output%205G%20Network%20result/Screenshot%20(1197).png)
+![RF Output Satellite Broadcast Scrennshot](screenshots/Andrei%20Gheorghe/RF%20Output%20Satellite%20Broadcast%20result/Screenshot%20(1198).png)
+![RF Output Wifi result Screenshot 1](screenshots/Andrei%20Gheorghe/RF%20output%20WiFi%20result/Screenshot%20(1192).png)
+![RF Output Wifi result Screenshot 2](screenshots/Andrei%20Gheorghe/RF%20output%20WiFi%20result/Screenshot%20(1193).png)
+![5G Network Signal Script Presentation](application_videos/Andrei%20Gheorghe/5G%20Network%20Signal%20Script%20Presentation.mp4)
+![Cesium project presentation part 1](application_videos/Andrei%20Gheorghe/cesium-project-presentation-part-1_bz5jbCpu.mp4)
+![Cesium project presentation part 2](application_videos/Andrei%20Gheorghe/Cesium%20Project%20Presentation%20-%20part%202.mp4)
+![Cesium project presentation part 3](application_videos/Andrei%20Gheorghe/Cesium%20Project%20Presentation%20-%20part%203.mp4)
+![Cesium project presentation part 4](application_videos/Andrei%20Gheorghe/Cesium%20Project%20Presentation%20-%20part%204.mp4)
+![Satellite Broadcast Signal Script Presentation](application_videos/Andrei%20Gheorghe/Satellite%20Broadcast%20Signal%20Script%20Presentation.mp4)
+![Wi-Fi Signal Script Video Part 1](application_videos/Andrei%20Gheorghe/Wi-Fi%20Signal%20Script%20Presentation.mp4)
+![Wi-Fi Signal Script Video Part 2](application_videos/Andrei%20Gheorghe/Wi-Fi%20Signal%20Script%20Presentation%20-%20part%202.mp4)
 
 📌 **Features Covered:**
 - **Collision Detection & Physics Simulation**
@@ -111,7 +111,7 @@ Each video showcases **multiple functionalities** implemented by a team member.
 
 
 ### Asfa Feeroze's Demo
-[![Asfa's video](application_videos/Asfa%20Feeroze/model-demonstration_Ag9vXwI4.mp4)]
+![Asfa's video](application_videos/Asfa%20Feeroze/model-demonstration_Ag9vXwI4.mp4)
 (No screenshots available for this demo.)
 
 📌 **Features Covered:**
@@ -119,7 +119,7 @@ Each video showcases **multiple functionalities** implemented by a team member.
 - **Adding and Launching Objects Based on Coordinates**
 
 ### Jaein's Lewis's Demo
-[![Jaein's video presentation](application_videos/Jaein%20Lewis/Cesium%20Demonstration-Jaein%20Lewis.mp4)]
+![Jaein's video presentation](application_videos/Jaein%20Lewis/Cesium%20Demonstration-Jaein%20Lewis.mp4)
 (No screenshots available for this demo.)
 
 
@@ -133,10 +133,10 @@ Each video showcases **multiple functionalities** implemented by a team member.
 - **Pulse Animation of 3D Models**
 
 ### Jose Gaona
-[![Jose's video presentation part 1](application_videos/Jose%20Gaona/Hello%20World%20-%20Cesium%20Sandcastle%20y%205%20páginas%20más%20-%20Perfil%201_%20Microsoft​%20Edge%202025-03-04%2008-17-24.mp4)]
-[![Jose's video presentation part 2](application_videos/Jose%20Gaona/Hello%20World%20-%20Cesium%20Sandcastle%20y%205%20páginas%20más%20-%20Perfil%201_%20Microsoft​%20Edge%202025-03-04%2008-22-42.mp4)]
-[![Jose's video presentation part 3](application_videos/Jose%20Gaona/Hello%20World%20-%20Cesium%20Sandcastle%20y%205%20páginas%20más%20-%20Perfil%201_%20Microsoft​%20Edge%202025-03-04%2009-33-37.mp4)]
-[![Jose's video presentation part 4](application_videos/Jose%20Gaona/Hello%20World%20-%20Cesium%20Sandcastle%20y%207%20páginas%20más%20-%20Perfil%201_%20Microsoft​%20Edge%202025-03-04%2010-07-42.mp4)]
+![Jose's video presentation part 1](application_videos/Jose%20Gaona/Hello%20World%20-%20Cesium%20Sandcastle%20y%205%20páginas%20más%20-%20Perfil%201_%20Microsoft​%20Edge%202025-03-04%2008-17-24.mp4)
+![Jose's video presentation part 2](application_videos/Jose%20Gaona/Hello%20World%20-%20Cesium%20Sandcastle%20y%205%20páginas%20más%20-%20Perfil%201_%20Microsoft​%20Edge%202025-03-04%2008-22-42.mp4)
+![Jose's video presentation part 3](application_videos/Jose%20Gaona/Hello%20World%20-%20Cesium%20Sandcastle%20y%205%20páginas%20más%20-%20Perfil%201_%20Microsoft​%20Edge%202025-03-04%2009-33-37.mp4)
+![Jose's video presentation part 4](application_videos/Jose%20Gaona/Hello%20World%20-%20Cesium%20Sandcastle%20y%207%20páginas%20más%20-%20Perfil%201_%20Microsoft​%20Edge%202025-03-04%2010-07-42.mp4)
 (No screenshots available for this demo.)
 
 
@@ -148,7 +148,7 @@ Each video showcases **multiple functionalities** implemented by a team member.
 
 
 ### Murali Lingamsetty's Demo
-[![Murali's video presentation](application_videos/Murali%20Lingamsetty/2025-03-05%2020-23-27.mp4)]
+![Murali's video presentation](application_videos/Murali%20Lingamsetty/2025-03-05%2020-23-27.mp4)
 (No screenshots available for this demo.)
 
 
@@ -158,8 +158,8 @@ Each video showcases **multiple functionalities** implemented by a team member.
 - **Drag-and-Drop 3D Models and Sensors**
 
 ### Parmod's Demo
-[![Parmod's video presentation part 1](application_videos/Parmod/cesium-application_Z0H8vEgc.mp4)]
-[![Parmod's video presentation part 2](application_videos/Parmod/Cesium%20Application%20part%202.mp4)]
+![Parmod's video presentation part 1](application_videos/Parmod/cesium-application_Z0H8vEgc.mp4)
+![Parmod's video presentation part 2](application_videos/Parmod/Cesium%20Application%20part%202.mp4)
 (No screenshots available for this demo.)
 
 
@@ -171,16 +171,16 @@ Each video showcases **multiple functionalities** implemented by a team member.
 - **Rotation Controls through Panel or Keywords**
 
 ### Rafid Sorker's Screenshots Demo
-[![Screenshot 1](screenshots/Rafid%20Sorker/Screenshots/Screenshot%202025-02-09%20at%2010.17.38.png)]
-[![Screenshot 2](screenshots/Rafid%20Sorker/Screenshots/Screenshot%202025-02-09%20at%2010.24.23.png)]
-[![Screenshot 3](screenshots/Rafid%20Sorker/Screenshots/Screenshot%202025-02-09%20at%2010.41.37.png)]
-[![Screenshot 4](screenshots/Rafid%20Sorker/Screenshots/Screenshot%202025-02-09%20at%2010.44.25.png)]
-[![Screenshot 5](screenshots/Rafid%20Sorker/Screenshots/Screenshot%202025-02-09%20at%2010.49.28.png)]
-[![Screenshot 6](screenshots/Rafid%20Sorker/Screenshots/Screenshot%202025-02-09%20at%2010.53.44.png)]
-[![Screenshot 7](screenshots/Rafid%20Sorker/Screenshots/Screenshot%202025-02-09%20at%2010.59.03.png)]
-[![Screenshot 8](screenshots/Rafid%20Sorker/Screenshots/Screenshot%202025-02-09%20at%2011.37.28.png)]
-[![Screenshot 9](screenshots/Rafid%20Sorker/Screenshots/Screenshot%202025-02-26%20at%2015.16.42.png)]
-[![Screenshot 10](screenshots/Rafid%20Sorker/Screenshots/Screenshot%202025-02-26%20at%2015.17.14.png)]
+![Screenshot 1](screenshots/Rafid%20Sorker/Screenshots/Screenshot%202025-02-09%20at%2010.17.38.png)
+![Screenshot 2](screenshots/Rafid%20Sorker/Screenshots/Screenshot%202025-02-09%20at%2010.24.23.png)
+![Screenshot 3](screenshots/Rafid%20Sorker/Screenshots/Screenshot%202025-02-09%20at%2010.41.37.png)
+![Screenshot 4](screenshots/Rafid%20Sorker/Screenshots/Screenshot%202025-02-09%20at%2010.44.25.png)
+![Screenshot 5](screenshots/Rafid%20Sorker/Screenshots/Screenshot%202025-02-09%20at%2010.49.28.png)
+![Screenshot 6](screenshots/Rafid%20Sorker/Screenshots/Screenshot%202025-02-09%20at%2010.53.44.png)
+![Screenshot 7](screenshots/Rafid%20Sorker/Screenshots/Screenshot%202025-02-09%20at%2010.59.03.png)
+![Screenshot 8](screenshots/Rafid%20Sorker/Screenshots/Screenshot%202025-02-09%20at%2011.37.28.png)
+![Screenshot 9](screenshots/Rafid%20Sorker/Screenshots/Screenshot%202025-02-26%20at%2015.16.42.png)
+![Screenshot 10](screenshots/Rafid%20Sorker/Screenshots/Screenshot%202025-02-26%20at%2015.17.14.png)
 (No video presentation available for this demo.)
 
 📌 **Features Covered:**
@@ -189,12 +189,12 @@ Each video showcases **multiple functionalities** implemented by a team member.
 - **GNU Radio signal graph**
 
 ### Victor Rosca's Demo
-[![Cesium animation for sphere](application_videos/Victor%20Rosca/Cesium/animation_for_sphere.mp4)]
-[![Cesium pulse of objects](application_videos/Victor%20Rosca/Cesium/pulse-for-objects_VWTl0AYh.mp4)]
-[![Objects put on map](application_videos/Victor%20Rosca/Cesium/putting_objects_on_map.mp4)]
-[![Week 2 Synthetic signal](application_videos/Victor%20Rosca/RF_engineering/week2-synthetic_signal.mp4)]
-[![Week 3 Extract features and label dataset](application_videos/Victor%20Rosca/RF_engineering/week3-extract_features+label_dataset.mp4)]
-[![Week 4 Machine Learning Model Development and Integration](application_videos/Victor%20Rosca/RF_engineering/week4-Machine%20Learning%20Model%20Development%20and%20Integration.mp4)]
+![Cesium animation for sphere](application_videos/Victor%20Rosca/Cesium/animation_for_sphere.mp4)
+![Cesium pulse of objects](application_videos/Victor%20Rosca/Cesium/pulse-for-objects_VWTl0AYh.mp4)
+![Objects put on map](application_videos/Victor%20Rosca/Cesium/putting_objects_on_map.mp4)
+![Week 2 Synthetic signal](application_videos/Victor%20Rosca/RF_engineering/week2-synthetic_signal.mp4)
+![Week 3 Extract features and label dataset](application_videos/Victor%20Rosca/RF_engineering/week3-extract_features+label_dataset.mp4)
+![Week 4 Machine Learning Model Development and Integration](application_videos/Victor%20Rosca/RF_engineering/week4-Machine%20Learning%20Model%20Development%20and%20Integration.mp4)
 (No screenshots available for this demo.)
 
 📌 **Features Covered:**
