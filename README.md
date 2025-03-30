@@ -1,9 +1,14 @@
 # Cesium Team Project Repository  
 
-# Overview
+![OpenQQuantify Banner](https://www.openqquantify.com/static/logo.png)
+
+![GitHub stars](https://img.shields.io/github/stars/openqquantify/cesium-projects-team?style=social)
+![License](https://img.shields.io/github/license/openqquantify/cesium-projects-team)
+
+## Overview
 This repository contains our team's contributions to the **Cesium Team Project**, including application demonstrations, object files, videos, and source code. The project aims to merge and organize all work into a structured repository for better collaboration, version control, and open-source sharing.  
 
-# Repository Structure
+## Repository Structure
 
 ```
 
@@ -37,25 +42,35 @@ This repository contains our team's contributions to the **Cesium Team Project**
 
  ```
 
-# Folder Breakdown
-# 📂 demos/
-Contains application-related resources:
-- ## obj_files/ → Stores 3D models and assets.
-- ## application_videos/ → Holds demonstration videos, screenshots, and related documents.
+## 🎥 Demo Videos
+### Cesium 3D Interaction Preview:
+--The demo videos that are going to be added--
 
-# 📂 docs/
+## ✨ Main Features
+- 🌍 **3D Model Integration** with Cesium
+- 📡 **Advanced Sensor Simulation**
+- 🔄 **Real-time Data Processing**
+- 🏗 **Modular Architecture**
+
+## Folder Breakdown
+### 📂 demos/
+Contains application-related resources:
+- #### obj_files/ → Stores 3D models and assets.
+- #### application_videos/ → Holds demonstration videos, screenshots, and related documents.
+
+### 📂 docs/
 Includes project documentation:
 - Each team member has a separate folder for their specific documentation.
 
-# 📂 src/
+### 📂 src/
 Contains the source code, structured by functionality:
 - Each module has a README.md for guidance.
 - Team members’ individual contributions are stored inside relevant subfolders.
 
-# 📜 LICENSE
+### 📜 LICENSE
 Defines the open-source license governing the project.
 
-# How to Use This Repository
+## How to Use This Repository
 1. **Explore the `demos/` folder** to view application demonstrations.  
 2. **Check the `src/` folder** to access the source code of different members.  
 3. **Refer to `docs/`** for contribution guidelines and licensing information.  
@@ -66,11 +81,16 @@ git clone https://github.com/openqquantify/cesium-projects-team.git
 cd cesium-projects-team
 ```
 
-Merging & Open-Sourcing Plan
+## Merging & Open-Sourcing Plan
 ✔️ Structured repository organization for seamless collaboration.
 ✔️ Automated code merging using AI tools.
 ✔️ Open-source contributions to benefit the community.
 
+
+## Team Leaders
+- Paul Savluc - CEO & founder
+- Adam Karabin - COO
+- Havard Lillebo - CTO
 
 ## Team members
 - Ahmed Adel  
@@ -93,5 +113,5 @@ Merging & Open-Sourcing Plan
 - Zaid Daghash     
 - Ziad Edam Allam   
 
-# License
+## License
 This project is licensed under the Apache 2.0 License – see the LICENSE file for details.
