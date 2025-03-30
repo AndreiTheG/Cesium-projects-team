@@ -59,16 +59,13 @@ Download and upload the files to Cesium Ion or serve them externally for use in 
 
 Import the models dynamically into your Cesium project to visualize and manipulate them.
 
-# Demos
-The demos/ folder contains recorded demonstrations and 3D object files showcasing key functionalities implemented in the Cesium Team Project. These videos help users understand different features developed by the team.
-
 # Demo Videos (📂 application_videos/)
 Each video showcases **multiple functionalities** implemented by a team member.
 
 ---
 
  ### Ahmed Adel's Demo
-[![Freq](screenshots/Ahmed%20Adel/Signals/Signals/ScreenShots/Freq.png)] 
+![Freq](screenshots/Ahmed%20Adel/Signals/Signals/ScreenShots/Freq.png)
 [![Signal](screenshots/Ahmed%20Adel/Signals/Signals/ScreenShots/simulated%20underwater%20acoustic%20signal.png)]
 [![Waterfall](screenshots/Ahmed%20Adel/Signals/Signals/ScreenShots/waterfall.png)]  
 [![Ahmed's Video](application_videos/Ahmed%20Adel/Cesium/Cesuim%20Vid.mp4)]
