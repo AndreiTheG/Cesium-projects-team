@@ -34,14 +34,14 @@ This repository contains our team's contributions to the **Cesium Team Project**
  │  
  ├── LICENSE                        # Open-source license (Apache 2.0)  
  ├── README.md                      # Project Overview  
- 
+
  ```
 
 # Folder Breakdown
 # 📂 demos/
 Contains application-related resources:
-- ## ** obj_files/ → Stores 3D models and assets.
-- ## ** application_videos/ → Holds demonstration videos, screenshots, and related documents.
+- ## obj_files/ → Stores 3D models and assets.
+- ## application_videos/ → Holds demonstration videos, screenshots, and related documents.
 
 # 📂 docs/
 Includes project documentation:

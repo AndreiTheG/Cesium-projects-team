@@ -3,7 +3,7 @@ Our team has implemented functionality that allows users to upload .glb objects 
 
 This enhancement provides greater flexibility for users to visualize and interact with custom 3D models within the Cesium environment.
 
-# Contributors**
+# Contributors
 - Ahmed Adel
 - Jaein Lewis
 - Roberta-Andreea Popescu

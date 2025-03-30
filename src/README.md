@@ -17,4 +17,16 @@ To improve maintainability and consistency, the following steps should be taken:
 - Plan Modular Integration – Define a strategy for merging different implementations into a cohesive, modularized application.
 - Standardize Code Structure – Establish consistent coding practices to streamline future development.
 
-# **Contributors**
+# Contributors
+- Ahmed Adel
+- Andrei Gheorghe
+- Asfa Feeroze
+- Jaein Lewis
+- Jose Gaona
+- Muhammad Umar Bakhtiar Khan
+- Murali Lingamsetty
+- Parmod
+- Rafid Sorker
+- Roberta-Andreea Popescu
+- Rustambek
+- Victor Rosca
