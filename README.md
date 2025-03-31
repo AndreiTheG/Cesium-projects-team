@@ -2,8 +2,8 @@
 
 ![OpenQQuantify Banner](https://www.openqquantify.com/static/logo.png)
 
-![GitHub stars](https://img.shields.io/github/stars/AndreiTheG/cesium-projects-team?style=social)
-![License](https://img.shields.io/github/license/AndreiTheG/cesium-projects-team)
+![GitHub stars](https://img.shields.io/github/stars/openqquantify/cesium-projects-team?style=social)
+![License](https://img.shields.io/github/license/openqquantify/cesium-projects-team)
 
 # Intro
 The Cesium Team Project brings together cutting-edge technology to visualize 3D models, simulate sensors, and process real-time data. By leveraging Cesium's 3D mapping capabilities, we create dynamic, interactive applications for a range of industries, from IoT integration to advanced sensor simulations. Join us in revolutionizing how we interact with and understand spatial data!
