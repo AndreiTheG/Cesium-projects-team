@@ -12,7 +12,8 @@ The Cesium Team Project brings together cutting-edge technology to visualize 3D 
 
 Watch as users interact with the map by adding and manipulating 3D models in real time! This demo shows the seamless placement of objects, enabling real-time visualization and interaction.
 
-![Object Placement Demo](demos/screenshots/large.gif)
+![Drone Placement Demo](demos/screenshots/large.gif)
+![Space Rocket Placement Demo](demos/screenshots/Webb_flies_Ariane_animation.gif)
 
 This is just a glimpse of how objects like buildings, cars, or sensors can be integrated into your 3D world.
 
@@ -27,7 +28,9 @@ This repository contains our team's contributions to the **Cesium Team Project**
  ├── 📂 demos  
  │   ├── 📂 obj_files              # 3D models, assets, and related files  
  │   │   ├── 📂 [Team Member Name]  # Individual contributions  
- │   ├── 📂 application_videos      # Application demonstrations, screenshots, and documents  
+ │   ├── 📂 application_videos      # Video application demonstrations 
+ │   │   ├── 📂 [Team Member Name]  
+ │   ├── 📂 screenshots     # Application screenshots 
  │   │   ├── 📂 [Team Member Name]  
  │  
  ├── 📂 docs  
@@ -81,9 +84,13 @@ This repository contains our team's contributions to the **Cesium Team Project**
 
 ## Folder Breakdown
 ### 📂 demos/
+
+![Flying Cesium Plane example](demos\screenshots\f6c2519106f674041718fb3c52c08dd7e762c115.gif)
+
 Contains application-related resources:
 - #### obj_files/ → Stores 3D models and assets.
-- #### application_videos/ → Holds demonstration videos, screenshots, and related documents.
+- #### application_videos/ → Holds demonstration videos
+- #### screenshots/ → Holds screenshots presentations
 
 ### 📂 docs/
 Includes project documentation:
