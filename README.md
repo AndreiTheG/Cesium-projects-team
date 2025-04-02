@@ -122,11 +122,11 @@ cd cesium-projects-team
 
 
 ## Team Leaders
-- Paul Savluc - CEO & founder
+- Paul Savluc - CEO & Founder
 - Adam Karabin - COO
-- Havard Lillebo - CTO
+- Havard Lillebo - CFO
 
-## Team members
+## Engineers/Developers 
 - Ahmed Adel  
 - Andrei Gheorghe
 - Asfa Feeroze  
@@ -146,6 +146,15 @@ cd cesium-projects-team
 - Yostina Daghash
 - Zaid Daghash     
 - Ziad Edam Allam   
+
+## Connect With Us!
+- Paul Savluc, CEO & Founder LinkedIn: https://www.linkedin.com/in/paul-savluc/
+- OpenQQuantify LinkedIn: https://www.linkedin.com/company/openqquantify/
+- Tomorrow's AI LinkedIn: https://www.linkedin.com/company/tomorrows-ai/
+
+### We Are Looking for Team Members, Investors, Sponsors, and Partners! 
+Reach out to us!
+We handle consulting and contracts as well!
 
 ## 📜 License
 This project is licensed under the Apache 2.0 License – see the LICENSE file for details.
